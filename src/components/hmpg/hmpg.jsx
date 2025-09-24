@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -9,6 +10,10 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ShareIcon from '@mui/icons-material/Share';
 
 
 function hmpg() {
@@ -217,7 +222,15 @@ function hmpg() {
           </Box>
         </Box>
         {/* Categories and Featured Articles */}
-        <Box sx={{ width: "100%", margin: "auto", backgroundColor: "#f9f9f9", pt: 4, pb: 4 }}>
+        <Box
+          sx={{
+            width: "100%",
+            margin: "auto",
+            backgroundColor: "#f9f9f9",
+            pt: 4,
+            pb: 4,
+          }}
+        >
           {/* Category Section */}
           <Box sx={{ width: "100%" }}>
             <Typography
@@ -342,6 +355,412 @@ function hmpg() {
                   world.
                 </Typography>
               </Paper>
+            </Box>
+          </Box>
+          {/* Trending Section */}
+          <Box>
+            <Typography
+              variant="body1"
+              align="left"
+              sx={{ fontSize: 30, fontWeight: "bold", color: "gray", p: 2 }}
+            >
+              <TrendingUpIcon
+                sx={{ fontSize: 30, verticalAlign: "middle", ml: 0.5 }}
+              />
+              Trending
+            </Typography>
+            {/* Trending Article Item */}
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2, p: 2 }}>
+              {/* icon */}
+              <Box>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    mb: 1,
+                    padding: "0 20px",
+                    backgroundColor: "lightgray",
+                    width: "fit-content",
+                    p: 3,
+                    borderRadius: 2,
+                  }}
+                >
+                  1
+                </Typography>
+              </Box>
+              {/* article title texts */}
+              <Box>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", mb: 1, padding: "0 20px" }}
+                >
+                  Mastering JavaScript: Advanced Patterns Every Developer Should
+                  Know
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", mb: 1, padding: "0 20px" }}
+                >
+                  <span style={{ marginRight: "8px" }}>David Park</span> .{" "}
+                  <span style={{ color: "purple", margin: "0 8px" }}>
+                    Technology
+                  </span>
+                </Typography>
+              </Box>
+              {/* views count */}
+              <Box sx={{ marginLeft: "auto", padding: "0 20px" }}>
+                <Typography sx={{ color: "green" }}>57.1 K</Typography>
+              </Box>
+            </Box>
+            {/* Trending Article Item */}
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2, p: 2 }}>
+              {/* icon */}
+              <Box>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    mb: 1,
+                    padding: "0 20px",
+                    backgroundColor: "lightgray",
+                    width: "fit-content",
+                    p: 3,
+                    borderRadius: 2,
+                  }}
+                >
+                  1
+                </Typography>
+              </Box>
+              {/* article title texts */}
+              <Box>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", mb: 1, padding: "0 20px" }}
+                >
+                  The Art of Minimalist Design: Less is More in 2024
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", mb: 1, padding: "0 20px" }}
+                >
+                  <span style={{ marginRight: "8px" }}>Anna Flode</span> .{" "}
+                  <span style={{ color: "purple", margin: "0 8px" }}>
+                    Design
+                  </span>
+                </Typography>
+              </Box>
+              {/* views count */}
+              <Box sx={{ marginLeft: "auto", padding: "0 20px" }}>
+                <Typography sx={{ color: "green" }}>34.5 K</Typography>
+              </Box>
+            </Box>
+            {/* Trending Article Item */}
+            <Box sx={{ display: "flex", alignItems: "center", mt: 2, p: 2 }}>
+              {/* icon */}
+              <Box>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    mb: 1,
+                    padding: "0 20px",
+                    backgroundColor: "lightgray",
+                    width: "fit-content",
+                    p: 3,
+                    borderRadius: 2,
+                  }}
+                >
+                  1
+                </Typography>
+              </Box>
+              {/* article title texts */}
+              <Box>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", mb: 1, padding: "0 20px" }}
+                >
+                  Cryptocurrency Explained: A Beginner's Complete Guide
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", mb: 1, padding: "0 20px" }}
+                >
+                  <span style={{ marginRight: "8px" }}>John Smith</span> .{" "}
+                  <span style={{ color: "purple", margin: "0 8px" }}>
+                    Finance
+                  </span>
+                </Typography>
+              </Box>
+              {/* views count */}
+              <Box sx={{ marginLeft: "auto", padding: "0 20px" }}>
+                <Typography sx={{ color: "green" }}>123.7 K</Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/* Featured Writer Section */}
+          <Box>
+            <Typography
+              variant="body1"
+              align="left"
+              sx={{ fontSize: 30, fontWeight: "bold", color: "gray", p: 2 }}
+            >
+              <EmojiEventsIcon
+                sx={{ fontSize: 30, verticalAlign: "middle", ml: 0.5 }}
+              />
+              Featured Writer
+            </Typography>
+            {/* user info */}
+            <Paper
+              elevation={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                m: 2,
+                p: 6,
+                borderRadius: 4,
+              }}
+            >
+              {/* icon */}
+              <Box>
+                <Avatar sx={{ bgcolor: "purple" }}>SC</Avatar>
+              </Box>
+              {/* article title texts */}
+              <Box sx={{ ml: 4 }}>
+                <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+                  Sarah Chen
+                </Typography>
+                <Typography variant="body2" sx={{ color: "gray", mb: 1 }}>
+                  Tech writer & AI enthusiast
+                </Typography>
+                <Typography variant="body1">
+                  12.5K followers • 89 posts
+                </Typography>
+              </Box>
+              {/* follow button */}
+              <Box sx={{ marginLeft: "auto" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#ce00f7ff",
+                    "&:hover": { bgcolor: "#a500c4ff" },
+                  }}
+                >
+                  Follow
+                </Button>
+              </Box>
+            </Paper>
+            {/* user info */}
+            <Paper
+              elevation={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                m: 2,
+                p: 6,
+                borderRadius: 4,
+              }}
+            >
+              {/* icon */}
+              <Box>
+                <Avatar sx={{ bgcolor: "purple" }}>MD</Avatar>
+              </Box>
+              {/* article title texts */}
+              <Box sx={{ ml: 4 }}>
+                <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+                  Marshal Dave
+                </Typography>
+                <Typography variant="body2" sx={{ color: "gray", mb: 1 }}>
+                  Lifestyle & wellness coach
+                </Typography>
+                <Typography variant="body1">
+                  8.2K followers • 156 posts
+                </Typography>
+              </Box>
+              {/* follow button */}
+              <Box sx={{ marginLeft: "auto" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#ce00f7ff",
+                    "&:hover": { bgcolor: "#a500c4ff" },
+                  }}
+                >
+                  Follow
+                </Button>
+              </Box>
+            </Paper>
+            {/* user info */}
+            <Paper
+              elevation={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                m: 2,
+                p: 6,
+                borderRadius: 4,
+              }}
+            >
+              {/* icon */}
+              <Box>
+                <Avatar sx={{ bgcolor: "purple" }}>EK</Avatar>
+              </Box>
+              {/* article title texts */}
+              <Box sx={{ ml: 4 }}>
+                <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+                  Elena Kowalski
+                </Typography>
+                <Typography variant="body2" sx={{ color: "gray", mb: 1 }}>
+                  Business strategist
+                </Typography>
+                <Typography variant="body1">
+                  15.1K followers • 203 posts
+                </Typography>
+              </Box>
+              {/* follow button */}
+              <Box sx={{ marginLeft: "auto" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#ce00f7ff",
+                    "&:hover": { bgcolor: "#a500c4ff" },
+                  }}
+                >
+                  Follow
+                </Button>
+              </Box>
+            </Paper>
+          </Box>
+          {/* Newsletter Subscription Section */}
+          <Box
+            sx={{
+              background: "linear-gradient(to right, #e100ffff, #3485ffff)",
+              mt: 4,
+              p: 4,
+            }}
+          >
+            {/* heading */}
+            <Typography
+              variant="body1"
+              align="center"
+              sx={{ fontSize: 30, fontWeight: "bold", color: "white", p: 2 }}
+            >
+              Stay Updated with Latest Stories
+            </Typography>
+            {/* subheading */}
+            <Typography
+              variant="body2"
+              align="center"
+              sx={{ fontSize: 16, color: "white", p: 2 }}
+            >
+              Get the best articles delivered to your inbox every week
+            </Typography>
+            {/* email input and subscribe button */}
+            <Box sx={{ textAlign: "center", mb: 4 }}>
+              <TextField
+                id="filled-textarea"
+                label="Email Address"
+                multiline
+                sx={{ bgcolor: "white", borderRadius: 1, width: "300px" }}
+              />
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "white",
+                  color: "#4797ffff",
+                  fontWeight: "bold",
+                  ml: 2,
+                  height: "56px",
+                  "&:hover": { bgcolor: "#f0f0f0" },
+                }}
+              >
+                Subscribe Now
+              </Button>
+              <Typography variant="body2" sx={{ color: "white", mt: 2 }}>
+                Join 25,000+ subscribers. No spam, unsubscribe anytime.
+              </Typography>
+            </Box>
+          </Box>
+          {/* Footer Section */}
+          <Box
+            sx={{
+              backgroundColor: "rgba(32, 32, 32, 1)",
+              textAlign: "center",
+              p: 5,
+            }}
+          >
+            <Typography
+              variant="h5"
+              align="center"
+              sx={{ color: "white", mb: 2 }}
+            >
+              Blogcraftier
+            </Typography>
+            <Typography
+              variant="body2"
+              align="center"
+              sx={{ color: "white", mb: 2, pb: 2 }}
+            >
+              The most beautiful platform for writers, creators, and
+              storytellers to share their passion with the world.
+            </Typography>
+            <Box
+              sx={{ display: "flex", justifyContent: "center", gap: 2, pb: 2 }}
+            >
+              <button>
+                <FavoriteBorderIcon />
+              </button>
+              <button>
+                <ChatBubbleOutlineIcon />
+              </button>
+              <button>
+                <ShareIcon />
+              </button>
+            </Box>
+            <Box>
+              <ul>
+                <li
+                  style={{
+                    display: "inline",
+                    margin: "0 10px",
+                    color: "white",
+                  }}
+                >
+                  About
+                </li>
+                <li
+                  style={{
+                    display: "inline",
+                    margin: "0 10px",
+                    color: "white",
+                  }}
+                >
+                  Contact
+                </li>
+                <li
+                  style={{
+                    display: "inline",
+                    margin: "0 10px",
+                    color: "white",
+                  }}
+                >
+                  Privacy Policy
+                </li>
+                <li
+                  style={{
+                    display: "inline",
+                    margin: "0 10px",
+                    color: "white",
+                  }}
+                >
+                  Terms of Service
+                </li>
+                <li
+                  style={{
+                    display: "inline",
+                    margin: "0 10px",
+                    color: "white",
+                  }}
+                >
+                  Help Center
+                </li>
+              </ul>
             </Box>
           </Box>
         </Box>
