@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import Paper from '@mui/material/Paper';
@@ -740,7 +741,16 @@ function hmpg() {
                     color: "white",
                   }}
                 >
+                 <Link
+                  to="../pp"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: 'bold',
+                  }}
+                >
                   Privacy Policy
+                </Link>
                 </li>
                 <li
                   style={{
@@ -749,7 +759,16 @@ function hmpg() {
                     color: "white",
                   }}
                 >
-                  Terms of Service
+                <Link
+                  to="../t&c"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Terms & Conditions
+                </Link>
                 </li>
                 <li
                   style={{
