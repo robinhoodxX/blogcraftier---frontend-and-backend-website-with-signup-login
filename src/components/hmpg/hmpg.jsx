@@ -223,13 +223,28 @@ function hmpg() {
           </Box>
         </Box>
         {/* Categories and Featured Articles */}
-        <Box
-          sx={{
+        <Box 
+        sx={{
             width: "100%",
             margin: "auto",
-            backgroundColor: "#f9f9f9",
             pt: 4,
             pb: 4,
+          }}
+          >
+          <Box
+          sx={{
+            display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "auto",
+              padding: "10px 22px",
+              backgroundColor: "#ffffffff",
+              boxShadow: 3,
+              margin: "0 auto 0 auto",
+              borderShadow: 3,
+              zIndex: 0,
+              width: "90%",
           }}
         >
           {/* Category Section */}
@@ -310,6 +325,7 @@ function hmpg() {
               variant="body1"
               align="left"
               sx={{
+                display: { xs: "none", sm: "flex", md: "flex" },
                 fontSize: 30,
                 fontWeight: "bold",
                 color: "rgba(24, 24, 24, 0.7)",
@@ -628,11 +644,12 @@ function hmpg() {
               </Box>
             </Paper>
           </Box>
-          {/* Newsletter Subscription Section */}
+        </Box>
+        {/* Newsletter Subscription Section */}
           <Box
             sx={{
-              background: "linear-gradient(to right, #e100ffff, #3485ffff)",
-              mt: 4,
+              background: "linear-gradient(to bottom right, #e100ffff, #3485ffff)",
+              mt: 0,
               p: 4,
             }}
           >
@@ -723,7 +740,16 @@ function hmpg() {
                     color: "white",
                   }}
                 >
+                  <Link
+                  to="../abt"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: 'bold',
+                  }}
+                >
                   About
+                </Link>
                 </li>
                 <li
                   style={{
@@ -732,7 +758,16 @@ function hmpg() {
                     color: "white",
                   }}
                 >
+                  <Link
+                  to="../cntt"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: 'bold',
+                  }}
+                >
                   Contact
+                </Link>
                 </li>
                 <li
                   style={{
@@ -777,7 +812,16 @@ function hmpg() {
                     color: "white",
                   }}
                 >
+                  <Link
+                  to="../hc"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: 'bold',
+                  }}
+                >
                   Help Center
+                </Link>
                 </li>
               </ul>
             </Box>
