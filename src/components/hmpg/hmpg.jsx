@@ -227,8 +227,6 @@ function hmpg() {
         sx={{
             width: "100%",
             margin: "auto",
-            pt: 4,
-            pb: 4,
           }}
           >
           <Box
@@ -245,6 +243,8 @@ function hmpg() {
               borderShadow: 3,
               zIndex: 0,
               width: "90%",
+              pt: 4,
+              mb: 4,
           }}
         >
           {/* Category Section */}
