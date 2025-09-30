@@ -227,6 +227,7 @@ function hmpg() {
         sx={{
             width: "100%",
             margin: "auto",
+            backgroundImage: "linear-gradient(to left, #e100ffff, #3485ffff)",
           }}
           >
           <Box
@@ -648,7 +649,7 @@ function hmpg() {
         {/* Newsletter Subscription Section */}
           <Box
             sx={{
-              background: "linear-gradient(to bottom right, #e100ffff, #3485ffff)",
+              background: "linear-gradient(to right, #3485ffff, #e100ffff)",
               mt: 0,
               p: 4,
             }}
