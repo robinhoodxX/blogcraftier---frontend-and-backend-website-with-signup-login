@@ -15,6 +15,16 @@ const db = mysql.createConnection({
   database: "myapp",   // your database name
 });
 
+// Connect to database warning handling
+db.connect(err => {
+  if (err) {
+    console.error("Database connection failed:", err);
+    process.exit(1); // stop server
+  }
+  console.log("Connected to MySQL database");
+});
+
+
 // Register (Signup)
 app.post("/signup", async (req, res) => {
   const { fullName, username, email, password, confirmPassword } = req.body;
@@ -70,6 +80,25 @@ app.post("/login", (req, res) => {
       console.error("Error comparing passwords:", compareErr);
       res.status(500).json({ error: "Server error during password check" });
     }
+  });
+});
+
+// POST: Save story
+app.post("/api/stories", (req, res) => {
+  const { content, category } = req.body;
+  const sql = "INSERT INTO stories (content, category) VALUES (?, ?)";
+  db.query(sql, [content, category], (err, result) => {
+    if (err) return res.status(500).json({ message: "Failed to save story" });
+    res.json({ id: result.insertId, content, category, created_at: new Date() });
+  });
+});
+
+// GET: Fetch stories
+app.get("/api/stories", (req, res) => {
+  const sql = "SELECT * FROM stories ORDER BY created_at DESC";
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ message: "Failed to fetch stories" });
+    res.json(results);
   });
 });
 

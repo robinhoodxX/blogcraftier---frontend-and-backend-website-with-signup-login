@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Box, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -58,7 +59,9 @@ function hmpg() {
               >
                 <li>
                   <Tooltip title="Home" arrow>
-                    <HomeFilledIcon />
+                    <Link to="../hmpg" style={{ color: 'inherit' }}>
+                      <HomeFilledIcon />
+                    </Link>
                   </Tooltip>
                 </li>
                 <li>
@@ -173,7 +176,15 @@ function hmpg() {
                     "&:hover": { bgcolor: "#a500c4ff" },
                   }}
                 >
-                  + Start Writing
+                <Link
+                  to="../stw"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'white',
+                  }}
+                >
+                 + Start Writing
+                </Link>
                 </Button>
                 <Button
                   variant="outlined"
