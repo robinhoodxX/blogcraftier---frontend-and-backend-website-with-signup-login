@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, Typography, Paper, TextField, Alert } from "@mui/material";
+import { Box, Button, Typography, Paper, TextField, Alert } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -44,6 +44,8 @@ function Stw({ onStorySubmit }) {
       setError("Failed to submit story. Try again later.");
     }
   };
+
+  
 
   return (
     <Box>

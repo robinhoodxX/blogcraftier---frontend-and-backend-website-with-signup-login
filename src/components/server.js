@@ -102,6 +102,25 @@ app.get("/api/stories", (req, res) => {
   });
 });
 
+// DELETE story by id (MySQL)
+app.delete("/api/stories/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "DELETE FROM stories WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("Error deleting story:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Story not found" });
+    }
+
+    res.json({ success: true, deletedId: id });
+  });
+});
+
+
 // Start server
 app.listen(5000, () => {
   console.log("Server running on http://localhost:5000");
