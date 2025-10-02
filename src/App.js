@@ -10,6 +10,7 @@ import Hc from "./components/hmpg/hc/hc"; // adjust path if different
 import Cntt from "./components/hmpg/cntt/cntt"; // adjust path if different
 import Abt from "./components/hmpg/abt/abt"; // adjust path if different
 import Stw from "./components/hmpg/startwriting/stw"; // adjust path if different
+import Prfl from "./components/hmpg/prfl/prfl"; // adjust path if different
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/cntt" element={<Cntt />} />
         <Route path="/abt" element={<Abt />} />
         <Route path="/stw" element={<Stw onStoryAdded={handleStoryAdded} />} />
+        <Route path="/prfl" element={<Prfl />} />
       </Routes>
     </Router>
   );

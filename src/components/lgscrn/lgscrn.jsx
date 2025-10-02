@@ -149,7 +149,7 @@ function Welcomescreen() {
               <HttpsIcon sx={{ color: "gray", mr: 1 }} />
               <InputBase
                 name="password"
-                type="password"
+                type="text"
                 placeholder="Password"
                 value={loginData.password}
                 onChange={handleChange}

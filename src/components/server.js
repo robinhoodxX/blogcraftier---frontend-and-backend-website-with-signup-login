@@ -2,10 +2,13 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads")); // to serve uploaded files
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -24,63 +27,99 @@ db.connect(err => {
   console.log("Connected to MySQL database");
 });
 
+// Multer setup for profile picture
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // save in uploads folder
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // unique name
+  },
+});
+const upload = multer({ storage });
+
+
 
 // Register (Signup)
-app.post("/signup", async (req, res) => {
-  const { fullName, username, email, password, confirmPassword } = req.body;
+app.post("/signup", upload.single("profile_pic"), async (req, res) => {
+    const { fullName, username, email, password } = req.body;
 
-  if (!fullName || !username || !email || !password || !confirmPassword) {
-    return res.status(400).json({ error: "Please provide all required fields." });
-  }
+    // Remove password length validation
+    if (!fullName || !username || !email || !password) {
+        return res.status(400).json({ error: "All fields are required." });
+    }
 
-  if (password !== confirmPassword) {
-    return res.status(400).json({ error: "Passwords do not match." });
-  }
+    try {
+        // Check if user already exists
+        const existingUser = await new Promise((resolve, reject) => {
+            db.query("SELECT * FROM users WHERE email = ? OR username = ?", [email, username], (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
+            });
+        });
 
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const sql = "INSERT INTO users (fullName, username, email, password) VALUES (?, ?, ?, ?)";
-    db.query(sql, [fullName, username, email, hashedPassword], (err, result) => {
-      if (err) {
-        // handle duplicate email gracefully
-        if (err.code === "ER_DUP_ENTRY") return res.status(400).json({ error: "Email or username already exists." });
-        return res.status(500).json({ error: "Database error" });
-      }
-      res.json({ message: "User registered successfully" });
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
+        if (existingUser) {
+            return res.status(400).json({ error: "User already exists with this email or username." });
+        }
+
+        // Store password as plain text (no hashing)
+        const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+        db.query(
+            "INSERT INTO users (full_name, username, email, password, profile_pic) VALUES (?, ?, ?, ?, ?)",
+            [fullName, username, email, password, profilePicPath], // Store plain password
+            function (err) {
+                if (err) {
+                    console.error("Database error:", err.message);
+                    return res.status(500).json({ error: "Database error." });
+                }
+                res.status(201).json({ message: "User created successfully!" });
+            }
+        );
+    } catch (error) {
+        console.error("Signup error:", error);
+        res.status(500).json({ error: "Internal server error." });
+    }
 });
 
 
 // Login
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
 
-  const sql = "SELECT * FROM users WHERE email = ?";
-  db.query(sql, [email], async (err, results) => {
-    if (err) {
-      console.error("Database error during login:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
-    if (results.length === 0) {
-      return res.status(401).json({ error: "User not found. Please check your email or sign up first." });
+    if (!email || !password) {
+        return res.status(400).json({ error: "Email and password are required." });
     }
 
-    const user = results[0];
     try {
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return res.status(401).json({ error: "Invalid password. Please try again." });
-      }
-      res.json({ message: "Login successful", user });
-    } catch (compareErr) {
-      console.error("Error comparing passwords:", compareErr);
-      res.status(500).json({ error: "Server error during password check" });
+        const user = await new Promise((resolve, reject) => {
+            db.query("SELECT * FROM users WHERE email = ?", [email], (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
+            });
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: "User not found." });
+        }
+
+        // Direct password comparison (no bcrypt)
+        if (user.password !== password) {
+            return res.status(400).json({ error: "Invalid password." });
+        }
+
+        res.status(200).json({ 
+            message: "Login successful!", 
+            user: { 
+                id: user.id, 
+                username: user.username, 
+                email: user.email 
+            } 
+        });
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ error: "Internal server error." });
     }
-  });
 });
 
 // POST: Save story
@@ -119,6 +158,58 @@ app.delete("/api/stories/:id", (req, res) => {
     res.json({ success: true, deletedId: id });
   });
 });
+
+
+// Update profile API
+app.put("/api/users/:id", upload.single("profile_pic"), (req, res) => {
+  const { id } = req.params;
+  const { username, email, password, mobile } = req.body;
+  let profile_pic = req.file ? `/uploads/${req.file.filename}` : null;
+
+  const sql = `
+    UPDATE users
+    SET username = ?, email = ?, password = ?, mobile = ?, 
+        profile_pic = COALESCE(?, profile_pic)
+    WHERE id = ?
+  `;
+
+  db.query(sql, [username, email, password, mobile, profile_pic, id], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ success: true, message: "Profile updated successfully" });
+  });
+});
+
+// GET all users
+app.get("/api/users", (req, res) => {
+  const sql = "SELECT id, username, email, mobile, profile_pic FROM users";
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+});
+
+// GET user profile by ID
+app.get("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT id, username, email, password, mobile, profile_pic FROM users WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (result.length === 0) return res.status(404).json({ error: "User not found" });
+    res.json(result[0]);
+  });
+});
+
+// Debug endpoint to check password hash
+app.get("/api/debug/users/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT id, username, email, password, LENGTH(password) as password_length FROM users WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (result.length === 0) return res.status(404).json({ error: "User not found" });
+    res.json(result[0]);
+  });
+});
+
 
 
 // Start server

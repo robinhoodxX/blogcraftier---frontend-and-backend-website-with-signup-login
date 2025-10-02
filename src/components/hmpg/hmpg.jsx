@@ -109,7 +109,9 @@ function Hmpg() {
               </li>
             </ul>
           </Box>
-          <AccountCircleIcon sx={{ fontSize: 40 }} />
+          <Link to="../prfl" style={{ color: 'inherit' }}>
+            <AccountCircleIcon sx={{ fontSize: 30 }} />
+          </Link>
         </Box>
       </Box>
       {/* Main Content Area */}
