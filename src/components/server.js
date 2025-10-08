@@ -39,87 +39,94 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-
 // Register (Signup)
 app.post("/signup", upload.single("profile_pic"), async (req, res) => {
-    const { fullName, username, email, password } = req.body;
+  const { fullName, username, email, password } = req.body;
 
-    // Remove password length validation
-    if (!fullName || !username || !email || !password) {
-        return res.status(400).json({ error: "All fields are required." });
-    }
+  if (!fullName || !username || !email || !password) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
 
-    try {
-        // Check if user already exists
-        const existingUser = await new Promise((resolve, reject) => {
-            db.query("SELECT * FROM users WHERE email = ? OR username = ?", [email, username], (err, row) => {
-                if (err) reject(err);
-                else resolve(row);
-            });
-        });
-
-        if (existingUser) {
-            return res.status(400).json({ error: "User already exists with this email or username." });
+  try {
+    // Check if user already exists
+    const existingUser = await new Promise((resolve, reject) => {
+      db.query(
+        "SELECT * FROM users WHERE email = ? OR username = ?",
+        [email, username],
+        (err, rows) => {
+          if (err) reject(err);
+          else resolve(rows);
         }
+      );
+    });
 
-        // Store password as plain text (no hashing)
-        const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
-
-        db.query(
-            "INSERT INTO users (full_name, username, email, password, profile_pic) VALUES (?, ?, ?, ?, ?)",
-            [fullName, username, email, password, profilePicPath], // Store plain password
-            function (err) {
-                if (err) {
-                    console.error("Database error:", err.message);
-                    return res.status(500).json({ error: "Database error." });
-                }
-                res.status(201).json({ message: "User created successfully!" });
-            }
-        );
-    } catch (error) {
-        console.error("Signup error:", error);
-        res.status(500).json({ error: "Internal server error." });
+    // FIX: check if array has any rows
+    if (existingUser.length > 0) {
+      return res.status(400).json({
+        error: "User already exists with this email or username.",
+      });
     }
-});
 
+    const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // Insert new user
+    db.query(
+      "INSERT INTO users (fullName, username, email, password, profile_pic) VALUES (?, ?, ?, ?, ?)",
+      [fullName, username, email, password, profilePicPath],
+      function (err) {
+        if (err) {
+          console.error("Database error:", err.message);
+          return res.status(500).json({ error: "Database error." });
+        }
+        res.status(201).json({ message: "User created successfully!" });
+      }
+    );
+  } catch (error) {
+    console.error("Signup error:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
 
 // Login
 app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ error: "Email and password are required." });
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required." });
+  }
+
+  try {
+    const users = await new Promise((resolve, reject) => {
+      db.query("SELECT * FROM users WHERE email = ?", [email], (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      });
+    });
+
+    // Check if user exists
+    if (users.length === 0) {
+      return res.status(400).json({ error: "User not found." });
     }
 
-    try {
-        const user = await new Promise((resolve, reject) => {
-            db.query("SELECT * FROM users WHERE email = ?", [email], (err, row) => {
-                if (err) reject(err);
-                else resolve(row);
-            });
-        });
+    const user = users[0]; // Get the first (and only) result
 
-        if (!user) {
-            return res.status(400).json({ error: "User not found." });
-        }
-
-        // Direct password comparison (no bcrypt)
-        if (user.password !== password) {
-            return res.status(400).json({ error: "Invalid password." });
-        }
-
-        res.status(200).json({ 
-            message: "Login successful!", 
-            user: { 
-                id: user.id, 
-                username: user.username, 
-                email: user.email 
-            } 
-        });
-    } catch (error) {
-        console.error("Login error:", error);
-        res.status(500).json({ error: "Internal server error." });
+    // Direct password comparison (plain text)
+    if (user.password !== password) {
+      return res.status(400).json({ error: "Invalid password." });
     }
+
+    res.status(200).json({
+      message: "Login successful!",
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
 });
 
 // POST: Save story
@@ -141,21 +148,22 @@ app.get("/api/stories", (req, res) => {
   });
 });
 
-// DELETE story by id (MySQL)
-app.delete("/api/stories/:id", (req, res) => {
+// DELETE user by id
+app.delete("/api/users/:id", (req, res) => {
   const { id } = req.params;
-  const sql = "DELETE FROM stories WHERE id = ?";
+  const sql = "DELETE FROM users WHERE id = ?";
+
   db.query(sql, [id], (err, result) => {
     if (err) {
-      console.error("Error deleting story:", err);
+      console.error("Error deleting user:", err);
       return res.status(500).json({ error: "Database error" });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "Story not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.json({ success: true, deletedId: id });
+    res.json({ success: true, message: "User account deleted successfully." });
   });
 });
 
@@ -209,6 +217,24 @@ app.get("/api/debug/users/:id", (req, res) => {
     res.json(result[0]);
   });
 });
+
+// DELETE user by ID
+app.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  db.query("DELETE FROM users WHERE id = ?", [id], (err, result) => {
+    if (err) {
+      console.error("Error deleting user:", err);
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  });
+});
+
 
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Tooltip } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -20,7 +20,7 @@ import { useEffect } from "react";
 
 function Prfl() {
 
-    const userId = 1; // TODO: replace with logged-in user ID (from auth/session)
+    const userId = localStorage.getItem("userId"); // TODO: replace with logged-in user ID (from auth/session)
 
     // ================= STATE =================
     const [profile, setProfile] = useState({
@@ -86,18 +86,40 @@ function Prfl() {
         alert(data.message);
     };
 
-    const handleDelete = async () => {
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete your profile?"
-        );
-        if (!confirmDelete) return;
+  const navigate = useNavigate();
 
-        const res = await fetch(`http://localhost:5000/api/users/${userId}`, {
-            method: "DELETE",
-        });
-        const data = await res.json();
-        alert(data.message);
-    };
+  // ✅ Logout function
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+    navigate("/lgscrn"); // redirect to login page
+  };
+
+  // ✅ Delete account
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your profile?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/users/${userId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        alert(data.message || "Account deleted successfully");
+        // Remove user session and redirect
+        handleLogout();
+      } else {
+        alert(data.error || "Failed to delete account");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting account");
+    }
+  };
 
     return (
         <Box>
@@ -171,21 +193,12 @@ function Prfl() {
                 {/* Main Content Area */}
                 <Box sx={{ mt: 10, mb: 4, width: "100%", mx: "auto" }}>
                     <Paper sx={{ borderRadius: 4, boxShadow: 3, width: "95%", mx: "auto" }}>
-                        <Box sx={{ p: 3, minHeight: "80vh" }}>
-
-                            <Typography variant="h4" gutterBottom>
-                                User Profile
-                            </Typography>
-                            <Typography variant="body1">
-                                This is a placeholder for the user profile page. You can add user details, settings, and other relevant information here.
-                            </Typography>
-                        </Box>
+                        {/* Edit Profile Section */}
                         <Box sx={{ width: "100%", mt: 5, display: "flex", justifyContent: "center" }}>
-                            <Paper sx={{ width: "50%", p: 4, borderRadius: 3, boxShadow: 3 }}>
+                            <Paper sx={{ width: "50%", p: 4, borderRadius: 3, boxShadow: 3, background: "transparent" }}>
                                 <Typography variant="h5" align="center" gutterBottom>
                                     Edit Profile
                                 </Typography>
-
                                 {/* Profile Picture */}
                                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}>
                                     <Avatar
@@ -197,7 +210,6 @@ function Prfl() {
                                         <input type="file" hidden onChange={handleFileChange} />
                                     </Button>
                                 </Box>
-
                                 {/* Inputs */}
                                 <TextField label="Username" name="username" fullWidth margin="normal"
                                     value={profile.username || ""} onChange={handleChange} />
@@ -223,7 +235,7 @@ function Prfl() {
                                 />
                                 <TextField label="Mobile" name="mobile" fullWidth margin="normal"
                                     value={profile.mobile || ""} onChange={handleChange} />
-
+                                {/* Action Buttons */}
                                 <Box sx={{ mt: 3, textAlign: "center" }}>
                                     <Button variant="contained" color="primary" onClick={handleSave}>
                                         Save Changes
@@ -231,6 +243,10 @@ function Prfl() {
                                     {/* Delete Button */}
                                     <Button variant="outlined" color="error" onClick={handleDelete}>
                                         Delete Profile
+                                    </Button>
+                                    {/* Logout Button */}
+                                    <Button variant="outlined" color="primary" onClick={handleLogout}>
+                                        Logout
                                     </Button>
                                 </Box>
                             </Paper>

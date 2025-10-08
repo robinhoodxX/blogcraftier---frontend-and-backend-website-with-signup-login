@@ -14,6 +14,7 @@ import "../lgscrn/ParticleBackground.css";
 
 function SignupScreen() {
 
+  // particle background effect
   useEffect(() => {
     const container = document.getElementById("bgAnimation");
 

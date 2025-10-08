@@ -12,7 +12,7 @@ import "./ParticleBackground.css";
 
 
 function Welcomescreen() {
-
+  // particle background effect
   useEffect(() => {
     const container = document.getElementById("bgAnimation");
 
@@ -60,6 +60,7 @@ function Welcomescreen() {
     setLoading(true);
     try {
       const res = await axios.post("http://localhost:5000/login", loginData);
+      localStorage.setItem("userId", res.data.user.id); // Store user ID in localStorage
       alert("Login successful!");
       navigate("../hmpg");
     } catch (err) {
