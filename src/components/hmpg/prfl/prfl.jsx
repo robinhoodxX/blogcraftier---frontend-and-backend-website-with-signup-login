@@ -195,7 +195,7 @@ function Prfl() {
                     <Paper sx={{ borderRadius: 4, boxShadow: 3, width: "95%", mx: "auto" }}>
                         {/* Edit Profile Section */}
                         <Box sx={{ width: "100%", mt: 5, display: "flex", justifyContent: "center" }}>
-                            <Paper sx={{ width: "50%", p: 4, borderRadius: 3, boxShadow: 3, background: "transparent" }}>
+                            <Paper sx={{ width: "50%", p: 4, borderRadius: 3, boxShadow: "none", background: "transparent" }}>
                                 <Typography variant="h5" align="center" gutterBottom>
                                     Edit Profile
                                 </Typography>
@@ -235,8 +235,11 @@ function Prfl() {
                                 />
                                 <TextField label="Mobile" name="mobile" fullWidth margin="normal"
                                     value={profile.mobile || ""} onChange={handleChange} />
+                                <TextField label="Address" name="address" fullWidth margin="normal"
+                                    value={profile.address || ""} onChange={handleChange} />
                                 {/* Action Buttons */}
                                 <Box sx={{ mt: 3, textAlign: "center" }}>
+                                    {/* Save Button */}
                                     <Button variant="contained" color="primary" onClick={handleSave}>
                                         Save Changes
                                     </Button>
