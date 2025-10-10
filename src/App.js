@@ -11,8 +11,34 @@ import Cntt from "./components/hmpg/cntt/cntt"; // adjust path if different
 import Abt from "./components/hmpg/abt/abt"; // adjust path if different
 import Stw from "./components/hmpg/startwriting/stw"; // adjust path if different
 import Prfl from "./components/hmpg/prfl/prfl"; // adjust path if different
+import "../src/components/lgscrn/ParticleBackground.css";
+import { Box } from '@mui/material';
+import { useEffect } from 'react';
 
 function App() {
+
+  useEffect(() => {
+      const container = document.getElementById("bgAnimation");
+  
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+  
+        // Random horizontal position
+        particle.style.left = Math.random() * 100 + "%";
+  
+        // Random size
+        const size = Math.random() * 6 + 2;
+        particle.style.width = size + "px";
+        particle.style.height = size + "px";
+  
+        // Random animation duration and delay
+        particle.style.animationDelay = Math.random() * 20 + "s";
+        particle.style.animationDuration = Math.random() * 10 + 10 + "s";
+  
+        container.appendChild(particle);
+      }
+    }, []);
 
   const [stories, setStories] = useState([]);
 
@@ -22,6 +48,17 @@ function App() {
 
   return (
     <Router>
+      <Box id="bgAnimation"
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          zIndex: 1
+        }}
+      ></Box>
       <Routes>
         <Route path="/" element={<Welcomescreen />} />
         <Route path="/lgscrn" element={<LgScrn />} />

@@ -4,37 +4,12 @@ import HttpsIcon from '@mui/icons-material/Https';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-import "./ParticleBackground.css";
 
 
 
 function Welcomescreen() {
-  // particle background effect
-  useEffect(() => {
-    const container = document.getElementById("bgAnimation");
-
-    for (let i = 0; i < 20; i++) {
-      const particle = document.createElement("div");
-      particle.className = "particle";
-
-      // Random horizontal position
-      particle.style.left = Math.random() * 100 + "%";
-
-      // Random size
-      const size = Math.random() * 6 + 2;
-      particle.style.width = size + "px";
-      particle.style.height = size + "px";
-
-      // Random animation duration and delay
-      particle.style.animationDelay = Math.random() * 20 + "s";
-      particle.style.animationDuration = Math.random() * 10 + 10 + "s";
-
-      container.appendChild(particle);
-    }
-  }, []);
 
 
   // Login form state
@@ -85,14 +60,12 @@ function Welcomescreen() {
       width: '100%'
     }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', position: 'relative', overflow: 'hidden' }}>
-        <Box id="bgAnimation" sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden', zIndex: 1 }}></Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             width: "90%",
-            maxWidth: 400,
             p: 5,
             maxWidth: 400,
             mx: "auto",

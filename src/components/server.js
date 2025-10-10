@@ -129,25 +129,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// POST: Save story
-app.post("/api/stories", (req, res) => {
-  const { content, category } = req.body;
-  const sql = "INSERT INTO stories (content, category) VALUES (?, ?)";
-  db.query(sql, [content, category], (err, result) => {
-    if (err) return res.status(500).json({ message: "Failed to save story" });
-    res.json({ id: result.insertId, content, category, created_at: new Date() });
-  });
-});
-
-// GET: Fetch stories
-app.get("/api/stories", (req, res) => {
-  const sql = "SELECT * FROM stories ORDER BY created_at DESC";
-  db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ message: "Failed to fetch stories" });
-    res.json(results);
-  });
-});
-
 // DELETE user by id
 app.delete("/api/users/:id", (req, res) => {
   const { id } = req.params;
@@ -171,17 +152,17 @@ app.delete("/api/users/:id", (req, res) => {
 // Update profile API
 app.put("/api/users/:id", upload.single("profile_pic"), (req, res) => {
   const { id } = req.params;
-  const { username, email, password, mobile } = req.body;
+  const { username, email, password, mobile, address, gender } = req.body;
   let profile_pic = req.file ? `/uploads/${req.file.filename}` : null;
 
   const sql = `
     UPDATE users
-    SET username = ?, email = ?, password = ?, mobile = ?, 
+    SET username = ?, email = ?, password = ?, mobile = ?, address = ?, gender = ?,
         profile_pic = COALESCE(?, profile_pic)
     WHERE id = ?
   `;
 
-  db.query(sql, [username, email, password, mobile, profile_pic, id], (err, result) => {
+  db.query(sql, [username, email, password, mobile, address, gender, profile_pic, id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ success: true, message: "Profile updated successfully" });
   });
@@ -189,7 +170,7 @@ app.put("/api/users/:id", upload.single("profile_pic"), (req, res) => {
 
 // GET all users
 app.get("/api/users", (req, res) => {
-  const sql = "SELECT id, username, email, mobile, profile_pic FROM users";
+  const sql = "SELECT id, username, email, mobile, address, gender, profile_pic FROM users";
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);
@@ -199,7 +180,7 @@ app.get("/api/users", (req, res) => {
 // GET user profile by ID
 app.get("/api/users/:id", (req, res) => {
   const { id } = req.params;
-  const sql = "SELECT id, username, email, password, mobile, profile_pic FROM users WHERE id = ?";
+  const sql = "SELECT id, username, email, password, mobile, address, gender, profile_pic FROM users WHERE id = ?";
   db.query(sql, [id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     if (result.length === 0) return res.status(404).json({ error: "User not found" });
@@ -232,6 +213,42 @@ app.delete("/api/users/:id", (req, res) => {
     }
 
     res.json({ message: "User deleted successfully" });
+  });
+});
+
+// Update user gender
+app.put("/api/users/:id/gender", (req, res) => {
+  const { id } = req.params;
+  const { gender } = req.body;
+
+  if (!gender) {
+    return res.status(400).json({ success: false, message: "Gender is required" });
+  }
+
+  db.query("UPDATE users SET gender = ? WHERE id = ?", [gender, id], function (err) {
+    if (err) {
+      return res.status(500).json({ success: false, error: err.message });
+    }
+    res.json({ success: true, message: "Gender updated successfully" });
+  });
+});
+
+// POST: Save story
+app.post("/api/stories", (req, res) => {
+  const { content, category } = req.body;
+  const sql = "INSERT INTO stories (content, category) VALUES (?, ?)";
+  db.query(sql, [content, category], (err, result) => {
+    if (err) return res.status(500).json({ message: "Failed to save story" });
+    res.json({ id: result.insertId, content, category, created_at: new Date() });
+  });
+});
+
+// GET: Fetch stories
+app.get("/api/stories", (req, res) => {
+  const sql = "SELECT * FROM stories ORDER BY created_at DESC";
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ message: "Failed to fetch stories" });
+    res.json(results);
   });
 });
 

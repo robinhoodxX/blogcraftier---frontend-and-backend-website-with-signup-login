@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Tooltip } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import Genderdropdown from "./comps/prflgenderdrpdn";
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -28,6 +29,8 @@ function Prfl() {
         email: "",
         password: "",
         mobile: "",
+        address: "",
+        gender: "",
         profile_pic: null,
     });
     const [previewPic, setPreviewPic] = useState(null);
@@ -44,6 +47,8 @@ function Prfl() {
                 email: data.email || "",
                 password: data.password || "", // Keep password field empty for security
                 mobile: data.mobile || "",
+                address: data.address || "",
+                gender: data.gender || "",
                 profile_pic: data.profile_pic,
             });
             setPreviewPic(
@@ -73,6 +78,9 @@ function Prfl() {
             formData.append("password", profile.password);
         }
         formData.append("mobile", profile.mobile);
+        formData.append("address", profile.address);
+        formData.append("gender", profile.gender);
+        // Append profile picture file if it's a new file
         if (profile.profile_pic instanceof File) {
             formData.append("profile_pic", profile.profile_pic);
         }
@@ -210,6 +218,7 @@ function Prfl() {
                                         <input type="file" hidden onChange={handleFileChange} />
                                     </Button>
                                 </Box>
+                                <Genderdropdown name="gender" value={profile.gender || ""} onChange={handleChange} />
                                 {/* Inputs */}
                                 <TextField label="Username" name="username" fullWidth margin="normal"
                                     value={profile.username || ""} onChange={handleChange} />
