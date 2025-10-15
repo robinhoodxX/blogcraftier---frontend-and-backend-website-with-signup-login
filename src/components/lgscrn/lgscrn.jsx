@@ -55,11 +55,12 @@ function Welcomescreen() {
 
   return (
     <Box sx={{
-      background: "linear-gradient(to bottom right, #312e81, #581c87, #be185d)",
-      height: '100vh',
-      width: '100%'
+      width: '100%',
+      mt: 5,
+      mb: 10
     }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', position: 'relative', overflow: 'hidden' }}>
+      {/* Desktop screen Login Form */}
+      <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex', lg: 'flex', xl: 'flex' }, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', position: 'relative', }}>
         <Box
           sx={{
             display: "flex",
@@ -177,7 +178,128 @@ function Welcomescreen() {
           </Box>
         </Box>
       </Box>
+      {/* Mobile screen Login Form */}
+      <Box sx={{ display: { xs: 'flex', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', position: 'relative', }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "60%",
+            p: 5,
+            maxWidth: 400,
+            mx: "auto",
+            mt: 8,
+            borderRadius: 2,
+            bgcolor: "rgba(255, 255, 255, 0.1)", // like Paper
+            backdropFilter: "blur(8px)",
+            boxShadow: 3,     // mimic Paper's elevation
+            border: "1px solid rgba(255, 255, 255, 0.4)",
+            transition: "0.3s",
+            zIndex: 2,
+          }}
+        >
+          {/* Login Form */}
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+            {/* Login Header */}
+            <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.9)', mb: 3 }}>
+              Welcome back!
+            </Typography>
+            {/* Email Input */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid #ccc",
+                borderRadius: 2,
+                p: 1,
+                mb: 2,
+                bgcolor: "white",
+                width: "100%",
+              }}
+            >
+              <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
+              <InputBase
+                name="email"
+                placeholder="Email"
+                value={loginData.email}
+                onChange={handleChange}
+                fullWidth
+                sx={{ fontSize: 14 }}
+              />
+            </Box>
+            {/* Password Input */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid #ccc",
+                borderRadius: 2,
+                p: 1,
+                bgcolor: "white",
+                width: "100%",
+              }}
+            >
+              <HttpsIcon sx={{ color: "gray", mr: 1 }} />
+              <InputBase
+                name="password"
+                type="text"
+                placeholder="Password"
+                value={loginData.password}
+                onChange={handleChange}
+                fullWidth
+                sx={{ fontSize: 14 }}
+              />
+            </Box>
+            {error && (
+              <Typography color="error" sx={{ mb: 2 }}>
+                {error}
+              </Typography>
+            )}
+            {/* Login Button */}
+            <Button variant="contained" color="primary" fullWidth onClick={handleSubmit} disabled={loading} sx={{ mt: 2, p: 1.5, fontSize: 12, borderRadius: 2, width: '50%' }}>
+              Login
+            </Button>
+            {/* Forgot Password Link */}
+            <Box sx={{ mt: 2, textAlign: 'center' }}>
+              <Link to="#" style={{ textDecoration: 'none', color: 'rgba(216, 216, 216, 0.7)', fontSize: 11 }}>Forgot your password?</Link>
+              <Typography
+                variant="body2"
+                align="center"
+                sx={{
+                  color: 'rgba(216, 216, 216, 0.7)',
+                  mb: 2,
+                  fontSize: 11
+                }}
+              >
+                Don't have an account?<br />
+                <Link
+                  to="../sgnp"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Sign Up
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+          {/* Divider and Social Login */}
+          <Box>
+            {/* Divider */}
+            <Typography variant="body2" align="center" sx={{ color: 'rgba(216, 216, 216, 0.7)', mt: 2, mb: 1, fontSize: 11 }}>or continue with</Typography>
+            {/* Social Login Buttons */}
+            <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap", flex: 1 }}>
+              <Button variant="contained" sx={{ backgroundColor: '#ffffffff', color: 'rgba(85, 85, 85, 1)', '&:hover': { backgroundColor: '#303030ff', color: 'white' }, p: 2, m: 1, borderRadius: 2, width: '100%' }}><GoogleIcon sx={{ mr: 1, color: "rgba(68, 210, 151, 1)", fontSize: 14 }} />Google</Button>
+              <Button variant="contained" sx={{ backgroundColor: '#ffffffff', color: 'rgba(85, 85, 85, 1)', '&:hover': { backgroundColor: '#303030ff', color: 'white' }, p: 2, m: 1, borderRadius: 2, width: '100%' }}><FacebookIcon sx={{ mr: 1, color: "rgba(86, 87, 174, 1)", fontSize: 14 }} />Facebook</Button>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     </Box>
+    
   );
 }
 

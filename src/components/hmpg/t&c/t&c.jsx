@@ -1,4 +1,4 @@
-import { Typography, Box, Paper, colors } from "@mui/material";
+import { Typography, Box, Paper } from "@mui/material";
 import { green } from "@mui/material/colors";
 
 
@@ -17,9 +17,13 @@ function Tandc() {
         <Typography
           variant="h4"
           gutterBottom
-          style={{ margin: "20px", fontWeight: "bold", textAlign: "center" }}
+          sx={{
+            margin: "20px", fontWeight: "bold", textAlign: "center", fontSize: {
+              xs: "1.5rem",   // smaller screens (~h7)
+            },
+          }}
         >
-          Terms and Conditions for Blogcraftier
+          Terms and Conditions
         </Typography>
         <Typography
           variant="body1"

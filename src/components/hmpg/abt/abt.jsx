@@ -24,8 +24,9 @@ import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 export default function Abt() {
   return (
     <Container maxWidth="md" sx={{ py: { xs: 4, md: 8 } }}>
-      <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3 }}>
-        <Grid container spacing={4} alignItems="center">
+      <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, zIndex: 10, position: 'relative' }}>
+        <Grid container spacing={4} alignItems="center" sx={{ justifyContent: "center"}}>
+          {/* Left Section with Avatar and Title */}
           <Grid item xs={12} md={4}>
             <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
               <Avatar
@@ -46,7 +47,7 @@ export default function Abt() {
               </Box>
             </Box>
           </Grid>
-
+          {/* Right Section with Content */}
           <Grid item xs={12} md={8}>
             <Typography variant="h6" component="h2" gutterBottom>
               Welcome to Blogcraftier

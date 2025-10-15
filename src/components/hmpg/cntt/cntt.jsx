@@ -8,7 +8,6 @@ import {
   TextField,
   Button,
   Box,
-  Link,
   IconButton,
 } from "@mui/material";
 import {
@@ -30,17 +29,17 @@ export default function Cntt() {
         variant="h3"
         align="center"
         gutterBottom
-        sx={{ fontWeight: "bold" }}
+        sx={{ fontWeight: "bold" , color: 'white' }}
       >
         Contact Us
       </Typography>
-      <Typography variant="h6" align="center" color="text.secondary" paragraph>
+      <Typography variant="h6" align="center" color="white">
         We’d love to hear from you! Whether you have a question, suggestion, or
         collaboration idea — feel free to reach out.
       </Typography>
 
       {/* Contact Info */}
-      <Grid container spacing={4} sx={{ my: 4 }}>
+      <Grid container spacing={4} sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
         <Grid item xs={12} md={4}>
           <Card sx={{ borderRadius: "16px", boxShadow: 3 }}>
             <CardContent>
@@ -81,28 +80,46 @@ export default function Cntt() {
       </Grid>
 
       {/* Social Media */}
-      <Box textAlign="center" sx={{ my: 4 }}>
-        <Typography variant="h6" gutterBottom>
+      <Box textAlign="center" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4 }}>
+        <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" , color: 'white' }}>
           Follow Us
         </Typography>
-        <IconButton color="primary" href="#" target="_blank">
-          <Facebook />
-        </IconButton>
-        <IconButton color="primary" href="#" target="_blank">
-          <Twitter />
-        </IconButton>
-        <IconButton color="primary" href="#" target="_blank">
-          <Instagram />
-        </IconButton>
-        <IconButton color="primary" href="#" target="_blank">
-          <LinkedIn />
-        </IconButton>
+        {/* Social Media Icons desktop */}
+        <Box sx={{ backgroundColor: "#ffffff8d", backdropFilter: 'blur(10px)', width: "20%", borderRadius: "8px", display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex' }, justifyContent: 'space-around', p: 1 }}>
+          <IconButton href="#" target="_blank" sx={{ color: "#0f2f8dff"}}>
+            <Facebook />
+          </IconButton>
+          <IconButton href="#" target="_blank" sx={{ color: "#1DA1F2"}}>
+            <Twitter />
+          </IconButton>
+          <IconButton href="#" target="_blank" sx={{ color: "#E1306C"}}>
+            <Instagram />
+          </IconButton>
+          <IconButton href="#" target="_blank" sx={{ color: "#0077B5"}}>
+            <LinkedIn />
+          </IconButton>
+        </Box>
+        {/* Social Media Icons mobile */}
+        <Box sx={{ backgroundColor: "#ffffff8d", backdropFilter: 'blur(10px)', width: "70%", borderRadius: "8px", display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none' }, justifyContent: 'space-around', p: 1 }}>
+          <IconButton href="#" target="_blank" sx={{ color: "#0f2f8dff" }}>
+            <Facebook />
+          </IconButton>
+          <IconButton href="#" target="_blank" sx={{ color: "#1DA1F2" }}>
+            <Twitter />
+          </IconButton>
+          <IconButton href="#" target="_blank" sx={{ color: "#E1306C" }}>
+            <Instagram />
+          </IconButton>
+          <IconButton href="#" target="_blank" sx={{ color: "#0077B5" }}>
+            <LinkedIn />
+          </IconButton>
+        </Box>
       </Box>
 
       {/* Mailing Address */}
       <Box textAlign="center" sx={{ mb: 6 }}>
-        <LocationOn color="primary" fontSize="large" />
-        <Typography variant="body1">
+        <LocationOn fontSize="large" sx={{ color: "red" }} />
+        <Typography variant="body1" sx={{ color: "white" }}>
           Blogcraftier HQ, 123 Creative Street, Lahore, Pakistan
         </Typography>
       </Box>
@@ -121,7 +138,7 @@ export default function Cntt() {
         <Typography variant="h5" align="center" gutterBottom>
           Send Us a Message
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ justifyContent: "center" }}>
           <Grid item xs={12} sm={6}>
             <TextField label="Name" fullWidth required />
           </Grid>

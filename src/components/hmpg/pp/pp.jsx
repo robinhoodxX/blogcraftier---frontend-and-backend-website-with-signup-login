@@ -98,7 +98,7 @@ export default function BlogcraftierPrivacyPolicy() {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" mb={2}>
           <Box>
             <Typography variant="h4" component="h1" gutterBottom>
               Blogcraftier — Privacy Policy
@@ -109,12 +109,22 @@ export default function BlogcraftierPrivacyPolicy() {
           </Box>
 
           <Box>
+            {/* Button to copy full privacy policy text to clipboard desktop screen */}
             <Button
               variant="outlined"
               startIcon={<ContentCopyIcon />}
               onClick={copyToClipboard}
+              sx={{ display: { xs: 'none', md: 'flex', lg: 'flex', xl: 'flex' } }}
             >
               Copy Full Text
+            </Button>
+            {/* Button to copy full privacy policy text to clipboard mobile screen */}
+            <Button
+              variant="normal"
+              startIcon={<ContentCopyIcon />}
+              onClick={copyToClipboard}
+              sx={{ display: { xs: 'flex', md: 'none', lg: 'none', xl: 'none', color: 'blue' } }}
+            >
             </Button>
           </Box>
         </Box>

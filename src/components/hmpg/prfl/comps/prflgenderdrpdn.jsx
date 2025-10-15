@@ -7,7 +7,6 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
-import Prfl from '../prfl';
 
 export default function Genderdropdown( { name, value, onChange } ) {
     const [open, setOpen] = React.useState(false);
@@ -67,7 +66,7 @@ export default function Genderdropdown( { name, value, onChange } ) {
                     aria-expanded={open ? 'true' : undefined}
                     aria-haspopup="true"
                     onClick={handleToggle}
-                    sx={{ backgroundColor: "#1976d2", color: "white", marginTop: "10px", marginBottom: "10px", fontStyle: "none", textTransform: "none" }}
+                    sx={{ backgroundColor: "#008a6cff", color: "white", marginTop: "10px", marginBottom: "10px", fontStyle: "none", textTransform: "none", fontSize: 10, "&:hover": { backgroundColor: "#007a5cff", boxShadow: 3 } }}
                 >
                     {selectedGender ? selectedGender : "Gender"}
                 </Button>

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import ElectricBoltOutlinedIcon from '@mui/icons-material/ElectricBoltOutlined';
-import { useEffect } from 'react';
 import "./lgscrn/ParticleBackground.css";
 
 // To start first run xampp and start the Apache and MySQL modules.
@@ -19,28 +18,6 @@ import "./lgscrn/ParticleBackground.css";
 
 function Welcomescreen() {
 
-  useEffect(() => {
-    const container = document.getElementById("bgAnimation");
-
-    for (let i = 0; i < 20; i++) {
-      const particle = document.createElement("div");
-      particle.className = "particle";
-
-      // Random horizontal position
-      particle.style.left = Math.random() * 100 + "%";
-
-      // Random size
-      const size = Math.random() * 6 + 2;
-      particle.style.width = size + "px";
-      particle.style.height = size + "px";
-
-      // Random animation duration and delay
-      particle.style.animationDelay = Math.random() * 20 + "s";
-      particle.style.animationDuration = Math.random() * 10 + 10 + "s";
-
-      container.appendChild(particle);
-    }
-  }, []);
 
   const Box1 = styled(Box)(({ theme }) => ({
     textAlign: 'center',
@@ -64,48 +41,62 @@ function Welcomescreen() {
 
   return (
     <Box sx={{
-      background: "linear-gradient(to bottom right, #312e81, #581c87, #be185d)",
-      height: '100vh',
-      width: '100%'
+      width: '100%',
     }}>
-      <Box id="bgAnimation"
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden',
-          zIndex: 1
-        }}
-      >
-        </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', position: 'relative', overflow: 'hidden', zIndex: 2 }}>
+      {/* For desktop screens */}
+      <Box sx={{ display: { xs: 'flex', sm: 'flex', md: 'flex', lg: 'flex', xl: 'flex' }, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', mt: 15 }}>
         {/* Welcome Text */}
         <Box>
           <Typography variant="h3" color="initial" sx={{ fontWeight: 'bold', color: 'white', textAlign: 'center', pt: 4 }}>Welcome to BlogCraftier</Typography>
           <Typography variant="body2" color="initial" sx={{ color: 'rgba(255, 255, 255, 0.9)', textAlign: 'center', mt: 2 }}>Where stories come to life and creativity knows no bounds.</Typography>
         </Box>
         {/* Features */}
-        <Box sx={{ display: 'flex', width: '60%', justifyContent: 'space-around', mt: 6 }}>
-          <Box1>
-            <AutoAwesomeOutlinedIcon sx={{ fontSize: 40, color: 'yellow' }} />
-            <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>AI-Powered Writing</Typography>
-            <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Get suggestions and enhance your content with AI</Typography>
-          </Box1>
-          <Box1>
-            <GroupOutlinedIcon sx={{ fontSize: 40, color: 'lightblue' }} />
-            <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>Global Community</Typography>
-            <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Connect with 50K+ writers worldwide</Typography>
-          </Box1>
-          <Box1>
-            <ElectricBoltOutlinedIcon sx={{ fontSize: 40, color: 'lightgreen' }} />
-            <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>Instant Publishing</Typography>
-            <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Share your stories with one click</Typography>
-          </Box1>
+        <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex', lg: 'flex', xl: 'flex' }, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 6 }}>
+            <Box1>
+              <AutoAwesomeOutlinedIcon sx={{ fontSize: 40, color: 'yellow' }} />
+              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>AI-Powered Writing</Typography>
+              <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Get suggestions and enhance your content with AI</Typography>
+            </Box1>
+            <Box1>
+              <GroupOutlinedIcon sx={{ fontSize: 40, color: 'lightblue' }} />
+              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>Global Community</Typography>
+              <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Connect with 50K+ writers worldwide</Typography>
+            </Box1>
+            <Box1>
+              <ElectricBoltOutlinedIcon sx={{ fontSize: 40, color: 'lightgreen' }} />
+              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>Instant Publishing</Typography>
+              <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Share your stories with one click</Typography>
+            </Box1>
+          </Box>
+        </Box>
+        {/* Features for mobile screen*/}
+        <Box sx={{ display: { xs: 'flex', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, alignItems: 'center', justifyContent: 'center', width: '70%' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', mt: 6 }}>
+            <Box1>
+              <AutoAwesomeOutlinedIcon sx={{ fontSize: 20, color: 'yellow' }} />
+              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>AI-Powered Writing</Typography>
+              <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Get suggestions and enhance your content with AI</Typography>
+            </Box1>
+            <Box1>
+              <GroupOutlinedIcon sx={{ fontSize: 20, color: 'lightblue' }} />
+              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>Global Community</Typography>
+              <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Connect with 50K+ writers worldwide</Typography>
+            </Box1>
+            <Box1>
+              <ElectricBoltOutlinedIcon sx={{ fontSize: 20, color: 'lightgreen' }} />
+              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white' }}>Instant Publishing</Typography>
+              <Typography variant="h7" color="initial" sx={{ color: 'white' }}>Share your stories with one click</Typography>
+            </Box1>
+          </Box>
         </Box>
         {/* Buttons */}
-        <Box>
+        <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex', lg: 'flex', xl: 'flex' }}}>
+          <Button variant="contained" component={Link} to="/sgnp" sx={{ mt: 4, backgroundColor: '#ffffffff', color: 'black', '&:hover': { backgroundColor: '#cfcfcfff' }, p: 2, m: 2, borderRadius: 2, width: '270px' }}>Start Writing Today</Button>
+          <Button variant="outlined" component={Link} to="/lgscrn" sx={{ mt: 4, color: 'white', border: '1px solid white', '&:hover': { backgroundColor: '#bcbcbcff' }, p: 2, m: 2, borderRadius: 2, width: '270px', textAlign: 'center' }}>I Already have an account</Button>
+        </Box>
+        {/* Buttons for mobile screen */}
+        <Box sx={{ display: { xs: 'flex', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, flexDirection: 'column', alignItems: 'center' }}>
           <Button variant="contained" component={Link} to="/sgnp" sx={{ mt: 4, backgroundColor: '#ffffffff', color: 'black', '&:hover': { backgroundColor: '#cfcfcfff' }, p: 2, m: 2, borderRadius: 2, width: '270px' }}>Start Writing Today</Button>
           <Button variant="outlined" component={Link} to="/lgscrn" sx={{ mt: 4, color: 'white', border: '1px solid white', '&:hover': { backgroundColor: '#bcbcbcff' }, p: 2, m: 2, borderRadius: 2, width: '270px', textAlign: 'center' }}>I Already have an account</Button>
         </Box>

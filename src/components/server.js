@@ -4,6 +4,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 app.use(cors());
@@ -27,15 +28,32 @@ db.connect(err => {
   console.log("Connected to MySQL database");
 });
 
-// Multer setup for profile picture
+// Function to get next folder number
+const getNextFolder = () => {
+  const basePath = "uploads";
+  if (!fs.existsSync(basePath)) {
+    fs.mkdirSync(basePath);
+  }
+  const folders = fs.readdirSync(basePath).filter(f => fs.statSync(path.join(basePath, f)).isDirectory());
+  const nextNum = folders.length + 1;
+  const nextFolder = path.join(basePath, nextNum.toString());
+  if (!fs.existsSync(nextFolder)) {
+    fs.mkdirSync(nextFolder);
+  }
+  return nextFolder;
+};
+
+// Multer storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // save in uploads folder
+    const folder = getNextFolder();
+    cb(null, folder);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // unique name
+    cb(null, Date.now() + path.extname(file.originalname)); // e.g. 1696589293.jpg
   },
 });
+
 const upload = multer({ storage });
 
 
@@ -129,24 +147,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// DELETE user by id
-app.delete("/api/users/:id", (req, res) => {
-  const { id } = req.params;
-  const sql = "DELETE FROM users WHERE id = ?";
-
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.error("Error deleting user:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.json({ success: true, message: "User account deleted successfully." });
-  });
-});
 
 
 // Update profile API
@@ -251,6 +251,28 @@ app.get("/api/stories", (req, res) => {
     res.json(results);
   });
 });
+
+// DELETE: Delete story by ID
+app.delete("/api/stories/:id", (req, res) => {
+  const storyId = req.params.id;
+  const query = "DELETE FROM stories WHERE id = ?";
+
+  db.query(query, [storyId], (err, result) => {
+    if (err) {
+      console.error("Error deleting story:", err);
+      return res.status(500).json({ success: false, message: "Database error" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: "Story not found" });
+    }
+
+    res.json({ success: true, message: "Story deleted successfully" });
+  });
+});
+
+
+
 
 
 

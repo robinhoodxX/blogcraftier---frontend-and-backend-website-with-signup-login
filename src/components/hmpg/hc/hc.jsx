@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Container,
   Grid,
@@ -9,7 +7,6 @@ import {
   Box,
   TextField,
   InputAdornment,
-  IconButton,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -223,9 +220,9 @@ export default function Hc() {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Box sx={{ position: "sticky", top: 24 }}>
-              <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, gap: 2 }}>
+              <Paper sx={{ p: 2, pr: {xs: 2, md: 45}, mb: 2 }} elevation={2}>
+                <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, alignItems: "center", gap: 2 }}>
                   <Avatar sx={{ width: 56, height: 56 }}>BC</Avatar>
                   <Box>
                     <Typography variant="subtitle1">Blogcraftier Team</Typography>
@@ -254,13 +251,13 @@ export default function Hc() {
                   </ListItem>
                 </List>
 
-                <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+                <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, gap: 1, mt: 1 }}>
                   <Chip icon={<LiveHelpIcon />} label="Help Articles" clickable />
                   <Chip icon={<PolicyIcon />} label="Privacy & Security" clickable />
                 </Box>
               </Paper>
 
-              <Paper sx={{ p: 2 }} elevation={2}>
+              <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
                 <Typography variant="subtitle1" gutterBottom>
                   Quick links
                 </Typography>
