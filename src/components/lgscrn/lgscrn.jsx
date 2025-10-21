@@ -133,7 +133,7 @@ function Welcomescreen() {
               />
             </Box>
             {error && (
-              <Typography color="error" sx={{ mb: 2 }}>
+              <Typography color="white" sx={{ mb: 2 }}>
                 {error}
               </Typography>
             )}
