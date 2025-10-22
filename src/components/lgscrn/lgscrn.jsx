@@ -1,8 +1,10 @@
-import { Box, Button, Typography, InputBase } from '@mui/material'
+import { Box, Button, Typography, InputBase, IconButton, InputAdornment, TextField } from '@mui/material'
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import HttpsIcon from '@mui/icons-material/Https';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
@@ -17,6 +19,12 @@ function Welcomescreen() {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleToggleShowPassword = () => {
+    setShowPassword(s => !s);
+  };
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -109,7 +117,7 @@ function Welcomescreen() {
                 sx={{ fontSize: 16 }}
               />
             </Box>
-            {/* Password Input */}
+            {/* Password Input (with toggle eye) */}
             <Box
               sx={{
                 display: "flex",
@@ -122,13 +130,24 @@ function Welcomescreen() {
               }}
             >
               <HttpsIcon sx={{ color: "gray", mr: 1 }} />
-              <InputBase
+              <TextField
                 name="password"
-                type="text"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={loginData.password}
                 onChange={handleChange}
                 fullWidth
+                variant="standard"
+                InputProps={{
+                  disableUnderline: true,
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleToggleShowPassword} edge="end" size="small">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 sx={{ fontSize: 16 }}
               />
             </Box>
@@ -228,7 +247,7 @@ function Welcomescreen() {
                 sx={{ fontSize: 14 }}
               />
             </Box>
-            {/* Password Input */}
+            {/* Password Input (mobile) */}
             <Box
               sx={{
                 display: "flex",
@@ -241,13 +260,24 @@ function Welcomescreen() {
               }}
             >
               <HttpsIcon sx={{ color: "gray", mr: 1 }} />
-              <InputBase
+              <TextField
                 name="password"
-                type="text"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={loginData.password}
                 onChange={handleChange}
                 fullWidth
+                variant="standard"
+                InputProps={{
+                  disableUnderline: true,
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleToggleShowPassword} edge="end" size="small">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 sx={{ fontSize: 14 }}
               />
             </Box>

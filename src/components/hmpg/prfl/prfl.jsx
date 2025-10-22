@@ -29,6 +29,8 @@ function Prfl() {
         username: "",
         email: "",
         password: "",
+        oldPassword: "",
+        newPassword: "", // ⭐ new field
         mobile: "",
         address: "",
         gender: "",
@@ -36,6 +38,8 @@ function Prfl() {
     });
     const [previewPic, setPreviewPic] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
 
     // ================= FETCH PROFILE =================
     useEffect(() => {
@@ -71,33 +75,59 @@ function Prfl() {
     };
 
     const handleSave = async () => {
+    try {
+        // ⭐ If the user entered a new password, handle it via secure password update route
+        if (profile.newPassword && profile.newPassword.trim() !== "") {
+            const res = await fetch(`http://localhost:5000/api/users/${userId}/password`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    oldPassword: profile.oldPassword, // ⭐ old password for verification
+                    newPassword: profile.newPassword, // ⭐ new password to hash
+                }),
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error || "Failed to update password.");
+                return; // stop here if password update fails
+            }
+            alert("Password updated successfully!");
+        }
+
+        // ⭐ Continue saving other profile data
         const formData = new FormData();
         formData.append("username", profile.username);
         formData.append("email", profile.email);
-        // Only append password if it's not empty (user wants to change it)
-        if (profile.password.trim() !== "") {
-            formData.append("password", profile.password);
-        }
         formData.append("mobile", profile.mobile);
         formData.append("address", profile.address);
         formData.append("gender", profile.gender);
-        // Append profile picture file if it's a new file
+
+        // ⭐ Only append profile picture if it's a file
         if (profile.profile_pic instanceof File) {
             formData.append("profile_pic", profile.profile_pic);
         }
 
-        const res = await fetch(`http://localhost:5000/api/users/${userId}`, {
+        // ⭐ Send updated info to backend
+        const res2 = await fetch(`http://localhost:5000/api/users/${userId}`, {
             method: "PUT",
             body: formData,
         });
 
-        const data = await res.json();
-        alert(data.message);
+        const data2 = await res2.json();
+        alert(data2.message);
 
-        if (data.profile_pic_url) {
-            setProfile(prev => ({ ...prev, profile_pic: data.profile_pic_url }));
+        // ⭐ Update preview if new pic uploaded
+        if (data2.profile_pic_url) {
+            setProfile(prev => ({ ...prev, profile_pic: data2.profile_pic_url }));
         }
-    };
+
+    } catch (error) {
+        console.error("Save error:", error);
+        alert("⚠️ Something went wrong while saving profile.");
+    }
+};
+
 
     const navigate = useNavigate();
 
@@ -265,23 +295,45 @@ function Prfl() {
                                     value={profile.username || ""} onChange={handleChange} />
                                 <TextField label="Email" name="email" type="email" fullWidth margin="normal"
                                     value={profile.email || ""} onChange={handleChange} />
+                                {/* ⭐ Old Password */}
                                 <TextField
-                                    label="Password"
-                                    name="password"
-                                    type={showPassword ? "text" : "password"}
+                                    label="Old Password"
+                                    name="oldPassword"
+                                    type={showOldPassword ? "text" : "password"}
                                     fullWidth
                                     margin="normal"
-                                    value={profile.password}
+                                    value={profile.oldPassword || ""}
                                     onChange={handleChange}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <IconButton onClick={() => setShowPassword(!showPassword)}>
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                <IconButton onClick={() => setShowOldPassword(!showOldPassword)}>
+                                                    {showOldPassword ? <VisibilityOff /> : <Visibility />}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
-                                    }} />
+                                    }}
+                                />
+
+                                {/* ⭐ New Password */}
+                                <TextField
+                                    label="New Password"
+                                    name="newPassword"
+                                    type={showNewPassword ? "text" : "password"}
+                                    fullWidth
+                                    margin="normal"
+                                    value={profile.newPassword || ""}
+                                    onChange={handleChange}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setShowNewPassword(!showNewPassword)}>
+                                                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                                 <TextField label="Mobile" name="mobile" fullWidth margin="normal"
                                     value={profile.mobile || ""} onChange={handleChange} />
                                 <TextField label="Address" name="address" fullWidth margin="normal"

@@ -87,10 +87,14 @@ app.post("/signup", upload.single("profile_pic"), async (req, res) => {
 
     const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
 
+    // ⭐ Hash password before saving
+    const salt = await bcrypt.genSalt(10); // ⭐ generate salt
+    const hashedPassword = await bcrypt.hash(password, salt); 
+
     // Insert new user
     db.query(
       "INSERT INTO users (fullName, username, email, password, profile_pic) VALUES (?, ?, ?, ?, ?)",
-      [fullName, username, email, password, profilePicPath],
+      [fullName, username, email, hashedPassword, profilePicPath],
       function (err) {
         if (err) {
           console.error("Database error:", err.message);
@@ -129,8 +133,10 @@ app.post("/login", async (req, res) => {
     const user = users[0]; // Get the first (and only) result
 
     // Direct password comparison (plain text)
-    if (user.password !== password) {
-      return res.status(400).json({ error: "Invalid password." });
+    // ⭐ Compare hashed password using bcrypt
+    const validPassword = await bcrypt.compare(password, user.password); // ⭐
+    if (!validPassword) {
+      return res.status(400).json({ error: "Invalid password." }); // ⭐
     }
 
     res.status(200).json({
@@ -231,6 +237,59 @@ app.put("/api/users/:id/gender", (req, res) => {
     }
     res.json({ success: true, message: "Gender updated successfully" });
   });
+});
+
+// ⭐Update Password Route
+app.put("/api/users/:id/password", async (req, res) => {
+  const userId = req.params.id;
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ error: "Both old and new passwords are required." });
+  }
+
+  try {
+    // ⭐ Step 1: Find user by ID
+    const users = await new Promise((resolve, reject) => {
+      db.query("SELECT * FROM users WHERE id = ?", [userId], (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      });
+    });
+
+    if (users.length === 0) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const user = users[0];
+
+    // ⭐ Step 2: Check if old password is correct
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Old password is incorrect." });
+    }
+
+    // ⭐ Step 3: Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // ⭐ Step 4: Update new password in database
+    await new Promise((resolve, reject) => {
+      db.query(
+        "UPDATE users SET password = ? WHERE id = ?",
+        [hashedPassword, userId],
+        (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        }
+      );
+    });
+
+    res.status(200).json({ message: "Password updated successfully!" });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
 });
 
 // POST: Save story

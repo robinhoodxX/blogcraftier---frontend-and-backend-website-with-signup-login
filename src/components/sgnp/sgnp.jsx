@@ -1,8 +1,10 @@
-import { Box, Button, Typography, InputBase } from '@mui/material'
+import { Box, Button, Typography, InputBase, IconButton, InputAdornment, TextField  } from '@mui/material'
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import HttpsIcon from '@mui/icons-material/Https';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
@@ -20,7 +22,12 @@ function SignupScreen() {
     password: "",
     confirmPassword: "", // NEW: confirmPassword field
   });
+  const [showPassword, setShowPassword] = useState(false);
 
+  
+  const handleToggleShowPassword = () => {
+    setShowPassword(s => !s);
+  };
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -147,7 +154,7 @@ function SignupScreen() {
               gap: 4,
             }}
           >
-            {/* Login Form */}
+            {/* Signup Form */}
             <Box
               sx={{
                 display: "flex",
@@ -239,13 +246,24 @@ function SignupScreen() {
                 }}
               >
                 <HttpsIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
+                <TextField
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // * ADDED
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
                   fullWidth
+                  variant="standard"
+                  InputProps={{
+                    disableUnderline: true,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleToggleShowPassword} edge="end" size="small">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   sx={{ fontSize: 16 }}
                 />
               </Box>
@@ -263,13 +281,21 @@ function SignupScreen() {
                 }}
               >
                 <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
+                <TextField // * ADDED
                   placeholder="Confirm Password"
                   name="confirmPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // * ADDED
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   fullWidth
+                  variant="standard"
+                  InputProps={{
+                    disableUnderline: true,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                      </InputAdornment>
+                    ),
+                  }}
                   sx={{ fontSize: 16 }}
                 />
               </Box>
@@ -525,14 +551,25 @@ function SignupScreen() {
                 }}
               >
                 <HttpsIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
+                <TextField
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleChange}
                   fullWidth
+                  variant="standard"
                   sx={{ fontSize: 12 }}
+                  InputProps={{
+                    disableUnderline: true,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleToggleShowPassword} edge="end" size="small">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Box>
               {/* Confirm Password Input */}
@@ -549,13 +586,21 @@ function SignupScreen() {
                 }}
               >
                 <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
+                <TextField // * ADDED
                   placeholder="Confirm Password"
                   name="confirmPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // * ADDED
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   fullWidth
+                  variant="standard"
+                  InputProps={{
+                    disableUnderline: true,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                      </InputAdornment>
+                    ),
+                  }}
                   sx={{ fontSize: 12 }}
                 />
               </Box>
