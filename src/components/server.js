@@ -87,9 +87,9 @@ app.post("/signup", upload.single("profile_pic"), async (req, res) => {
 
     const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
 
-    // ⭐ Hash password before saving
-    const salt = await bcrypt.genSalt(10); // ⭐ generate salt
-    const hashedPassword = await bcrypt.hash(password, salt); 
+    //  Hash password before saving
+    const salt = await bcrypt.genSalt(10); //  generate salt
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // Insert new user
     db.query(
@@ -133,10 +133,10 @@ app.post("/login", async (req, res) => {
     const user = users[0]; // Get the first (and only) result
 
     // Direct password comparison (plain text)
-    // ⭐ Compare hashed password using bcrypt
-    const validPassword = await bcrypt.compare(password, user.password); // ⭐
+    //  Compare hashed password using bcrypt
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(400).json({ error: "Invalid password." }); // ⭐
+      return res.status(400).json({ error: "Invalid password." });
     }
 
     res.status(200).json({
@@ -239,7 +239,7 @@ app.put("/api/users/:id/gender", (req, res) => {
   });
 });
 
-// ⭐Update Password Route
+// Update Password Route
 app.put("/api/users/:id/password", async (req, res) => {
   const userId = req.params.id;
   const { oldPassword, newPassword } = req.body;

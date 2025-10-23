@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Box, Paper, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Avatar, Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import TextField from '@mui/material/TextField';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import CategoryIcon from '@mui/icons-material/Category';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
