@@ -8,6 +8,7 @@ function Tandc() {
       <Paper
         sx={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
+          backdropFilter: "blur(5px)",
           margin: "20px",
           padding: "20px",
           borderRadius: "10px",
