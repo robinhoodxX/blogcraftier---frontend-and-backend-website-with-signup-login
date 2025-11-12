@@ -329,15 +329,15 @@ function Welcomescreen() {
           </Box>
         </Box>
       </Box>
-    {/* Snackbar for login success */}
-    <Snackbar
-      open={snackbarOpen}
-      autoHideDuration={3000}
-      onClose={() => setSnackbarOpen(false)}
-      message="Login successful!"
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-    />
-  </Box>
+      {/* Snackbar for login success */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        message="Login successful!"
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
+    </Box>
 
   );
 }
