@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Tooltip } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Genderdropdown from "./comps/prflgenderdrpdn";
@@ -12,11 +12,10 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
-import { useEffect } from "react";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import BasicSelect from '../comp/navdpdn';
+import BasicSelect from '../naviconmobile/navdpdn';
 
 
 
@@ -75,58 +74,59 @@ function Prfl() {
     };
 
     const handleSave = async () => {
-    try {
-        // ⭐ If the user entered a new password, handle it via secure password update route
-        if (profile.newPassword && profile.newPassword.trim() !== "") {
-            const res = await fetch(`http://localhost:5000/api/users/${userId}/password`, {
+        try {
+            // ⭐ If the user entered a new password, handle it via secure password update route
+            if (profile.newPassword && profile.newPassword.trim() !== "") {
+                const res = await fetch(`http://localhost:5000/api/users/${userId}/password`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        oldPassword: profile.oldPassword, // ⭐ old password for verification
+                        newPassword: profile.newPassword, // ⭐ new password to hash
+                    }),
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.error || "Failed to update password.");
+                    return; // stop here if password update fails
+                }
+                alert("Password updated successfully!");
+            }
+
+            // ⭐ Continue saving other profile data
+            const formData = new FormData();
+            formData.append("username", profile.username);
+            formData.append("email", profile.email);
+            formData.append("mobile", profile.mobile);
+            formData.append("address", profile.address);
+            formData.append("gender", profile.gender);
+
+            // ⭐ Only append profile picture if it's a file
+            if (profile.profile_pic instanceof File) {
+                formData.append("profile_pic", profile.profile_pic);
+            }
+
+            // ⭐ Send updated info to backend
+            const res2 = await fetch(`http://localhost:5000/api/users/${userId}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    oldPassword: profile.oldPassword, // ⭐ old password for verification
-                    newPassword: profile.newPassword, // ⭐ new password to hash
-                }),
+                body: formData,
             });
 
-            const data = await res.json();
-            if (!res.ok) {
-                alert(data.error || "Failed to update password.");
-                return; // stop here if password update fails
+            const data2 = await res2.json();
+            alert(data2.message);
+
+            // ⭐ Update preview if new pic uploaded
+            if (data2.profile_pic_url) {
+                setPreviewPic(`http://localhost:5000${data2.profile_pic_url}`);
+                setProfile(prev => ({ ...prev, profile_pic: data2.profile_pic_url }));
             }
-            alert("Password updated successfully!");
+
+        } catch (error) {
+            console.error("Save error:", error);
+            alert("⚠️ Something went wrong while saving profile.");
         }
-
-        // ⭐ Continue saving other profile data
-        const formData = new FormData();
-        formData.append("username", profile.username);
-        formData.append("email", profile.email);
-        formData.append("mobile", profile.mobile);
-        formData.append("address", profile.address);
-        formData.append("gender", profile.gender);
-
-        // ⭐ Only append profile picture if it's a file
-        if (profile.profile_pic instanceof File) {
-            formData.append("profile_pic", profile.profile_pic);
-        }
-
-        // ⭐ Send updated info to backend
-        const res2 = await fetch(`http://localhost:5000/api/users/${userId}`, {
-            method: "PUT",
-            body: formData,
-        });
-
-        const data2 = await res2.json();
-        alert(data2.message);
-
-        // ⭐ Update preview if new pic uploaded
-        if (data2.profile_pic_url) {
-            setProfile(prev => ({ ...prev, profile_pic: data2.profile_pic_url }));
-        }
-
-    } catch (error) {
-        console.error("Save error:", error);
-        alert("⚠️ Something went wrong while saving profile.");
-    }
-};
+    };
 
 
     const navigate = useNavigate();
@@ -292,9 +292,15 @@ function Prfl() {
                                 </Box>
                                 {/* Inputs */}
                                 <TextField label="Username" name="username" fullWidth margin="normal"
-                                    value={profile.username || ""} onChange={handleChange} />
+                                    value={profile.username || ""} onChange={handleChange}
+                                    autoComplete="username" // * ADDED
+                                />
+
                                 <TextField label="Email" name="email" type="email" fullWidth margin="normal"
-                                    value={profile.email || ""} onChange={handleChange} />
+                                    value={profile.email || ""} onChange={handleChange}
+                                    autoComplete="email" // * ADDED
+                                />
+
                                 {/* ⭐ Old Password */}
                                 <TextField
                                     label="Old Password"
@@ -304,6 +310,7 @@ function Prfl() {
                                     margin="normal"
                                     value={profile.oldPassword || ""}
                                     onChange={handleChange}
+                                    autoComplete="current-password" // * ADDED
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -324,6 +331,7 @@ function Prfl() {
                                     margin="normal"
                                     value={profile.newPassword || ""}
                                     onChange={handleChange}
+                                    autoComplete="new-password" // * ADDED
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -335,14 +343,22 @@ function Prfl() {
                                     }}
                                 />
                                 <TextField label="Mobile" name="mobile" fullWidth margin="normal"
-                                    value={profile.mobile || ""} onChange={handleChange} />
+                                    value={profile.mobile || ""} onChange={handleChange}
+                                    autoComplete="tel" // * ADDED
+                                />
                                 <TextField label="Address" name="address" fullWidth margin="normal"
-                                    value={profile.address || ""} onChange={handleChange} />
+                                    value={profile.address || ""} onChange={handleChange}
+                                    autoComplete="street-address" // * ADDED
+                                />
                                 {/* Action Buttons */}
                                 <Box sx={{ mt: 3, textAlign: "center", gap: 1, display: "flex", flexDirection: "row", justifyContent: "center" }}>
                                     {/* Save Button */}
                                     <Button variant="contained" color="primary" onClick={handleSave}>
                                         Save Changes
+                                    </Button>
+                                    {/* Sign Out Button */}
+                                    <Button variant="outlined" color="error" onClick={handleLogout}>
+                                        Sign Out
                                     </Button>
                                     {/* Delete Button */}
                                     <Button variant="outlined" color="error" onClick={handleDelete}>
@@ -377,6 +393,7 @@ function Prfl() {
                                 {/* Inputs */}
                                 <TextField label="Username" name="username" fullWidth margin="normal"
                                     value={profile.username || ""} onChange={handleChange} sx={{
+                                        autoComplete: "username", // * ADDED (for mobile styled TextField add prop as well)
                                         "& .MuiInputBase-root": {
                                             height: 45,     // control height
                                             fontSize: 12,   // font size
@@ -388,6 +405,7 @@ function Prfl() {
                                     }} />
                                 <TextField label="Email" name="email" type="email" fullWidth margin="normal"
                                     value={profile.email || ""} onChange={handleChange} sx={{
+                                        autoComplete: "email", // * ADDED
                                         "& .MuiInputBase-root": {
                                             height: 45,     // control height
                                             fontSize: 12,   // font size
@@ -405,6 +423,7 @@ function Prfl() {
                                     margin="normal"
                                     value={profile.password}
                                     onChange={handleChange}
+                                    autoComplete="current-password" // * ADDED
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -426,6 +445,7 @@ function Prfl() {
                                     }} />
                                 <TextField label="Mobile" name="mobile" fullWidth margin="normal"
                                     value={profile.mobile || ""} onChange={handleChange} sx={{
+                                        autoComplete: "tel", // * ADDED
                                         "& .MuiInputBase-root": {
                                             height: 45,     // control height
                                             fontSize: 12,   // font size
@@ -437,6 +457,7 @@ function Prfl() {
                                     }} />
                                 <TextField label="Address" name="address" fullWidth margin="normal"
                                     value={profile.address || ""} onChange={handleChange} sx={{
+                                        autoComplete: "street-address", // * ADDED
                                         "& .MuiInputBase-root": {
                                             height: 45,     // control height
                                             fontSize: 12,   // font size
@@ -451,6 +472,10 @@ function Prfl() {
                                     {/* Save Button */}
                                     <Button variant="contained" color="primary" onClick={handleSave} sx={{ fontSize: 10 }}>
                                         Save Changes
+                                    </Button>
+                                    {/* Sign Out Button */}
+                                    <Button variant="outlined" color="error" onClick={handleLogout} sx={{ fontSize: 10 }}>
+                                        Sign Out
                                     </Button>
                                     {/* Delete Button */}
                                     <Button variant="outlined" color="error" onClick={handleDelete} sx={{ fontSize: 10 }}>

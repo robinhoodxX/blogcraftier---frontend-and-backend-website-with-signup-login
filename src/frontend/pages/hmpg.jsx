@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Avatar, Button } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
 import TextField from '@mui/material/TextField';
-import HomeFilledIcon from '@mui/icons-material/HomeFilled';
-import WhatshotIcon from '@mui/icons-material/Whatshot';
-import CategoryIcon from '@mui/icons-material/Category';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -16,7 +10,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import BasicSelect from './comp/navdpdn';
+import Navbar from "../../components/hmpg/navbar/navbar.jsx";
 
 
 
@@ -55,105 +49,7 @@ function Hmpg() {
 
   return (
     <Box>
-      {/* Navigation Bar */}
-      <Box sx={{ display: { xs: "none", sm: "flex", md: "flex", lg: "flex", xl: "flex" }, width: "100%", margin: "auto" }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "10px 22px",
-            backgroundColor: "rgba(56, 56, 56, 0.8)",
-            backdropFilter: "blur(8px)",
-            color: "white",
-            borderRadius: 6,
-            marginTop: 2,
-            boxShadow: 3,
-            zIndex: 30,
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            width: "90%",
-            mx: "auto",
-          }}
-        >
-          <Typography variant="h6">Blogcraftier</Typography>
-          <Box>
-            <ul
-              style={{
-                listStyle: "none",
-                display: "flex",
-                gap: "50px",
-                margin: 0,
-                padding: 0,
-              }}
-            >
-              <li>
-                <Tooltip title="Home" arrow>
-                  <Link to="../hmpg" style={{ color: 'inherit' }}>
-                    <HomeFilledIcon />
-                  </Link>
-                </Tooltip>
-              </li>
-              <li>
-                <Tooltip title="Trending" arrow>
-                  <WhatshotIcon />
-                </Tooltip>
-              </li>
-              <li>
-                <Tooltip title="Categories" arrow>
-                  <CategoryIcon />
-                </Tooltip>
-              </li>
-              <li>
-                <Tooltip title="Achievements" arrow>
-                  <EmojiEventsIcon />
-                </Tooltip>
-              </li>
-            </ul>
-          </Box>
-          <Tooltip title="Profile" arrow>
-            <Link to="../prfl" style={{ color: 'inherit' }}>
-              <AccountCircleIcon sx={{ fontSize: 30 }} />
-            </Link>
-          </Tooltip>
-        </Box>
-      </Box>
-      {/* Navigation Bar for mobile screen */}
-      <Box sx={{ display: { xs: "flex", sm: "none", md: "none", lg: "none", xl: "none" }, width: "100%", margin: "auto" }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "10px 22px",
-            backgroundColor: "rgba(56, 56, 56, 0.8)",
-            backdropFilter: "blur(8px)",
-            color: "white",
-            borderRadius: 6,
-            marginTop: 2,
-            boxShadow: 3,
-            zIndex: 30,
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            width: "80%",
-            mx: "auto",
-          }}
-        >
-          <Typography variant="h7">Blogcraftier</Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <BasicSelect />
-            <Tooltip title="Profile" arrow>
-              <Link to="../prfl" style={{ color: 'inherit' }}>
-                <AccountCircleIcon sx={{ fontSize: 30 }} />
-              </Link>
-            </Tooltip>
-          </Box>
-        </Box>
-      </Box>
+      <Navbar />
       
       {/* Main Content Area */}
       <Box sx={{ width: "100%", margin: "auto" }}>
@@ -548,7 +444,7 @@ function Hmpg() {
             </Box>
           </Box>
           {/* Featured Articles Section */}
-          <Box sx={{ mb: 4, width: "100%" }}>
+          <Box id="featuredsection" sx={{ mb: 4, width: "100%" }}>
             <Typography
               variant="body1"
               align="left"
@@ -624,7 +520,7 @@ function Hmpg() {
             </Box>
           </Box>
           {/* Trending Section */}
-          <Box sx={{ mb: 4, width: "100%" }}>
+          <Box id="trendingsection" sx={{ mb: 4, width: "100%" }}>
             <Box>
               <Typography
                 variant="body1"

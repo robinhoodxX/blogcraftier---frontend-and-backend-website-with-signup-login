@@ -9,7 +9,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import axios from 'axios'; // Make sure axios is installed
-import BasicSelect from '../comp/navdpdn';
+import BasicSelect from '../naviconmobile/navdpdn';
 
 function Stw({ onStorySubmit }) {
   const [title, setTitle] = useState("");
