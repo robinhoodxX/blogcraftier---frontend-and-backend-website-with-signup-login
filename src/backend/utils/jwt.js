@@ -1,33 +1,30 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-const SECRET_KEY = process.env.JWT_SECRET;
-const EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1d";
-
-// Generate a signed token
-function generateToken(user) {
-  return jwt.sign(
-    { id: user.id, email: user.email },
-    SECRET_KEY,
-    { expiresIn: EXPIRES_IN }
-  );
+// Sign JWT
+function signToken(payload) {
+  return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || "1d",
+  });
 }
 
-// Middleware to verify a token
+// Verify JWT middleware for protected routes
 function verifyToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json({ message: "Access denied. No token provided." });
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Authorization header missing or invalid" });
   }
+
+  const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    req.user = decoded; // Attach user info for next middleware or route
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // ⭐ attach user info to request
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid or expired token." });
+    return res.status(401).json({ error: "Invalid or expired token" });
   }
 }
 
-module.exports = { generateToken, verifyToken };
+module.exports = { signToken, verifyToken };

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const db = require("../db/index");
-
+const { signToken } = require("../utils/jwt");
 
 // Register (Signup)
 router.post("/signup", async (req, res) => {
@@ -83,8 +83,11 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Invalid password." });
     }
 
+    const token = signToken({ id: user.id, username: user.username, email: user.email });
+
     res.status(200).json({
       message: "Login successful!",
+      token,  // JWT token
       user: {
         id: user.id,
         username: user.username,

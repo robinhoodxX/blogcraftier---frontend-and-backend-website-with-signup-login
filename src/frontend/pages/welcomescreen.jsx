@@ -8,8 +8,7 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import ElectricBoltOutlinedIcon from '@mui/icons-material/ElectricBoltOutlined';
 
 // To start first run xampp and start the Apache and MySQL modules.
-// Create a database named "myapp" in phpmyadmin and create a table named "users" with the following SQL command:
-// CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, fullName VARCHAR(100), username VARCHAR(50) UNIQUE, email VARCHAR(100) UNIQUE, password VARCHAR(255));
+// Create a database named "myapp" in phpmyadmin and create a table named "users" with the following SQL command: check out the txt file about "creating database"
 // To start using the app, users need to log in or sign up. You must start the server.js using "node server.js" command in the terminal.
 // then use "npm start" to run the React app.
 // The server runs on http://localhost:5000 and the React app on http://localhost:3000 by default.

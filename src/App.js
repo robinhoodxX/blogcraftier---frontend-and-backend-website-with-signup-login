@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 
 function App() {
 
+  // Particle Background Effect
   useEffect(() => {
       const container = document.getElementById("bgAnimation");
   

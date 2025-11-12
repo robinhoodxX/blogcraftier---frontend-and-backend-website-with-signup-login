@@ -43,7 +43,10 @@ function Prfl() {
     // ================= FETCH PROFILE =================
     useEffect(() => {
         const fetchProfile = async () => {
-            const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+            const token = localStorage.getItem("token"); //  get JWT
+            const res = await fetch(`http://localhost:5000/api/users/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` }, // attach JWT
+            });
             const data = await res.json();
             // Don't load the hashed password into the form
             setProfile({
@@ -79,10 +82,12 @@ function Prfl() {
             if (profile.newPassword && profile.newPassword.trim() !== "") {
                 const res = await fetch(`http://localhost:5000/api/users/${userId}/password`, {
                     method: "PUT",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`, //  attach JWT
+                },
                     body: JSON.stringify({
                         oldPassword: profile.oldPassword, //  old password for verification
-                        newPassword: profile.newPassword, //  new password to hash
+                        newPassword: profile.newPassword, //  new password to hash,
                     }),
                 });
 
@@ -111,6 +116,9 @@ function Prfl() {
             const res2 = await fetch(`http://localhost:5000/api/users/${userId}`, {
                 method: "PUT",
                 body: formData,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`, // ⭐ attach JWT
+                },
             });
 
             const data2 = await res2.json();
@@ -148,6 +156,7 @@ function Prfl() {
         try {
             const res = await fetch(`http://localhost:5000/api/users/${userId}`, {
                 method: "DELETE",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // attach JWT
             });
             const data = await res.json();
 

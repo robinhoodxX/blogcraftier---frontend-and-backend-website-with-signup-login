@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const upload = require("../updflrmiddleware/upload");
 const bcrypt = require("bcrypt");
+const { verifyToken } = require("../utils/jwt");
 
 // GET all users
 router.get("/", (req, res) => {
@@ -14,9 +15,15 @@ router.get("/", (req, res) => {
 });
 
 // GET user profile by ID
-router.get("/:id", (req, res) => {
+router.get("/:id", verifyToken, (req, res) => {
   const { id } = req.params;
-  const sql = "SELECT id, username, email, password, mobile, address, gender, profile_pic FROM users WHERE id = ?";
+
+  // Optional: ensure user can only fetch their own profile
+  if (req.user.id != id) {
+    return res.status(403).json({ error: "Forbidden: You can only access your own profile" });
+  }
+
+  const sql = "SELECT id, username, email, mobile, address, gender, profile_pic FROM users WHERE id = ?";
   db.query(sql, [id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     if (result.length === 0) return res.status(404).json({ error: "User not found" });

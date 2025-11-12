@@ -44,6 +44,7 @@ function Welcomescreen() {
     setLoading(true);
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", loginData);
+      localStorage.setItem("token", res.data.token); // Store JWT token in localStorage
       localStorage.setItem("userId", res.data.user.id); // Store user ID in localStorage
       setSnackbarOpen(true);
       navigate("/hmpg");
