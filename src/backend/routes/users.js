@@ -126,7 +126,12 @@ router.put("/:id/password", async (req, res) => {
 router.put("/:id", upload.single("profile_pic"), async (req, res) => {
   const { id } = req.params;
   const { username, email, password, mobile, address, gender } = req.body;
-  let profile_pic = req.file ? `/uploads/${req.file.filename}` : null;
+  // normalize and build profile_pic path (works with subfolders)
+  let profile_pic = null;
+  if (req.file) {
+    // req.file.path contains the server-side path (e.g. uploads/1/169....jpg)
+    profile_pic = `/${req.file.path.replace(/\\/g, "/")}`;
+  }
 
   try {
     const fields = ["username = ?", "email = ?", "mobile = ?", "address = ?", "gender = ?", "profile_pic = COALESCE(?, profile_pic)"];

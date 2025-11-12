@@ -29,7 +29,7 @@ function Prfl() {
         email: "",
         password: "",
         oldPassword: "",
-        newPassword: "", // ⭐ new field
+        newPassword: "", //  new field
         mobile: "",
         address: "",
         gender: "",
@@ -75,14 +75,14 @@ function Prfl() {
 
     const handleSave = async () => {
         try {
-            // ⭐ If the user entered a new password, handle it via secure password update route
+            //  If the user entered a new password, handle it via secure password update route
             if (profile.newPassword && profile.newPassword.trim() !== "") {
                 const res = await fetch(`http://localhost:5000/api/users/${userId}/password`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        oldPassword: profile.oldPassword, // ⭐ old password for verification
-                        newPassword: profile.newPassword, // ⭐ new password to hash
+                        oldPassword: profile.oldPassword, //  old password for verification
+                        newPassword: profile.newPassword, //  new password to hash
                     }),
                 });
 
@@ -94,7 +94,7 @@ function Prfl() {
                 alert("Password updated successfully!");
             }
 
-            // ⭐ Continue saving other profile data
+            //  Continue saving other profile data
             const formData = new FormData();
             formData.append("username", profile.username);
             formData.append("email", profile.email);
@@ -102,12 +102,12 @@ function Prfl() {
             formData.append("address", profile.address);
             formData.append("gender", profile.gender);
 
-            // ⭐ Only append profile picture if it's a file
+            //  Only append profile picture if it's a file
             if (profile.profile_pic instanceof File) {
                 formData.append("profile_pic", profile.profile_pic);
             }
 
-            // ⭐ Send updated info to backend
+            //  Send updated info to backend
             const res2 = await fetch(`http://localhost:5000/api/users/${userId}`, {
                 method: "PUT",
                 body: formData,
@@ -116,7 +116,7 @@ function Prfl() {
             const data2 = await res2.json();
             alert(data2.message);
 
-            // ⭐ Update preview if new pic uploaded
+            //  Update preview if new pic uploaded
             if (data2.profile_pic_url) {
                 setPreviewPic(`http://localhost:5000${data2.profile_pic_url}`);
                 setProfile(prev => ({ ...prev, profile_pic: data2.profile_pic_url }));
