@@ -134,14 +134,14 @@ function Prfl() {
 
     const navigate = useNavigate();
 
-    // ✅ Logout function
+    //  Logout function
     const handleLogout = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("token");
         navigate("/lgscrn"); // redirect to login page
     };
 
-    // ✅ Delete account
+    //  Delete account
     const handleDelete = async () => {
         const confirmDelete = window.confirm(
             "Are you sure you want to delete your profile?"
