@@ -686,7 +686,7 @@ function Hmpg() {
             Get the best articles delivered to your inbox every week
           </Typography>
           {/* email input and subscribe button */}
-          <Box sx={{ display: {xs: "flex" }, flexDirection: { xs: "column" }, alignItems: { xs: "center" }, textAlign: {sm: "center", md: "center", lg: "center", xl: "center", lg: "center", xl: "center"}, mb: 4 }}>
+          <Box sx={{ display: {xs: "flex" }, flexDirection: { xs: "column" }, alignItems: { xs: "center" }, textAlign: {sm: "center", md: "center", lg: "center", xl: "center"}, mb: 4 }}>
             <TextField
               id="filled-textarea"
               label="Email Address"

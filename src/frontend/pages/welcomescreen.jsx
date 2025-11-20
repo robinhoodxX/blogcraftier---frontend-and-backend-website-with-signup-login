@@ -70,7 +70,7 @@ function Welcomescreen() {
           </Box>
         </Box>
         {/* Buttons */}
-        <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex', lg: 'flex', xl: 'flex' }}}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row', md: 'row', lg: 'row', xl: 'row' }, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           <Button variant="contained" component={Link} to="/sgnp" sx={{ mt: 4, backgroundColor: '#ffffffff', color: 'black', '&:hover': { backgroundColor: '#cfcfcfff' }, p: 2, m: 2, borderRadius: 2, width: '270px' }}>Start Writing Today</Button>
           <Button variant="outlined" component={Link} to="./lgscrn" sx={{ mt: 4, color: 'white', border: '1px solid white', '&:hover': { backgroundColor: '#bcbcbcff' }, p: 2, m: 2, borderRadius: 2, width: '270px', textAlign: 'center' }}>I Already have an account</Button>
         </Box>
