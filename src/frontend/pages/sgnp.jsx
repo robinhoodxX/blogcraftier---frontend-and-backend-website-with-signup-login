@@ -13,7 +13,7 @@ import axios from 'axios';
 
 function SignupScreen() {
 
-  {/* signup form */}
+  // signup form 
   const [formData, setFormData] = useState({
     fullName: "",
     username: "",

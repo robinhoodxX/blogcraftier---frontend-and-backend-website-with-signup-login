@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Tooltip } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Genderdropdown from "./comps/prflgenderdrpdn";
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
@@ -31,7 +31,7 @@ function Prfl() {
         profile_pic: null,
     });
     const [previewPic, setPreviewPic] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
+    //const [showPassword, setShowPassword] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
 

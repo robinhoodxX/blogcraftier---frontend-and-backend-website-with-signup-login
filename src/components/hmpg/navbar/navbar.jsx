@@ -6,7 +6,6 @@ import CategoryIcon from "@mui/icons-material/Category";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
-import { Link as Scrolllink } from "react-scroll";
 import BasicSelect from "../../hmpg/naviconmobile/navdpdn.jsx";
 
 

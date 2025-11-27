@@ -13,7 +13,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
 export default function IconDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedValue, setSelectedValue] = React.useState('Select an option');
+  const [setSelectedValue] = React.useState('Select an option'); //[selectedValue, setSelectedValue]
 
   const open = Boolean(anchorEl);
 
