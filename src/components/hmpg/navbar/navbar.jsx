@@ -7,6 +7,7 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import BasicSelect from "../../hmpg/naviconmobile/navdpdn.jsx";
+import Theme from "./comp/theme.jsx";
 
 
 function Navbar() {
@@ -65,6 +66,11 @@ function Navbar() {
             <li>
               <Tooltip title="Achievements" arrow>
                 <EmojiEventsIcon />
+              </Tooltip>
+            </li>
+            <li>
+              <Tooltip title="Theme" arrow>
+                <Theme />
               </Tooltip>
             </li>
           </ul>
