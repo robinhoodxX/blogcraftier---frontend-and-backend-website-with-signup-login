@@ -6,6 +6,7 @@ function Theme() {
     <Box>
       <InvertColorsIcon />
       <span>Theme</span>
+      <Typography>Light</Typography>
     </Box>
   )
 }
