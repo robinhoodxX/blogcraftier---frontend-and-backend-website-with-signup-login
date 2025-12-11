@@ -5,11 +5,31 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to bottom right, #413dc2, #7d1bc7, #e00963);
   background-attachment: fixed;
+
+}
+
+
+body.light {
+  background-image: linear-gradient(to bottom right, #413dc2, #7d1bc7, #e00963);
+  color: #000000;
+  /* light gradient */
+}
+
+body.dark {
+  background-image: linear-gradient(to bottom right, #000000, #ffffff);
+  color: #ffffff;
+  /* dark gradient */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.particle {
+  border-radius: 50%;
+  position: absolute;
+  transition: background-color 0.7s ease;
+  /* smooth color change */
 }

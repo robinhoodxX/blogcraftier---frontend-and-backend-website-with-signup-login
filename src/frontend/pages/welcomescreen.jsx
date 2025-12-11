@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import ElectricBoltOutlinedIcon from '@mui/icons-material/ElectricBoltOutlined';
+import * as motion from "motion/react-client"
 
 // To start first run xampp and start the Apache and MySQL modules.
 // Create a database named "myapp" in phpmyadmin and create a table named "users" with the following SQL command: check out the txt file about "creating database"
@@ -45,39 +46,51 @@ function Welcomescreen() {
       {/* Welcome screen */}
       <Box sx={{ display: 'flex' , flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', mt: 15 }}>
         {/* Welcome Text */}
-        <Box>
-          <Typography variant="h3" color="initial" sx={{ fontWeight: 'bold', color: 'white', textAlign: 'center', pt: 4, fontSize: { xs: 24, sm: 36, md: 48, lg: 48, xl: 48 } }}>Welcome to BlogCraftier</Typography>
-          <Typography variant="body2" color="initial" sx={{ color: 'rgba(255, 255, 255, 0.9)', textAlign: 'center', mt: 2, fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}>Where stories come to life and creativity knows no bounds.</Typography>
-        </Box>
-        {/* Features */}
-        <Box sx={{ display: 'flex' , alignItems: 'center', justifyContent: 'center', width: '100%'}}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-around', flexDirection: { xs: 'column', sm: 'row', md: 'row', lg: 'row', xl: 'row' }, alignItems: 'center', mt: 6 }}>
-            <Box1 sx={{ height: { xs: '100px', sm: '180px', md: '180px', lg: '140px', xl: '140px' }, }}>
-              <AutoAwesomeOutlinedIcon sx={{ fontSize: 40, color: 'yellow' }} />
-              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white', fontSize: { xs: 16, sm: 20, md: 24, lg: 24, xl: 24 } }}>AI-Powered Writing</Typography>
-              <Typography variant="h7" color="initial" sx={{ color: 'white', fontSize: { xs: 12, sm: 14, md: 16, lg: 16, xl: 16 } }}>Get suggestions and enhance your content with AI</Typography>
-            </Box1>
-            <Box1 sx={{ height: { xs: '100px', sm: '180px', md: '180px', lg: '140px', xl: '140px' }, }}>
-              <GroupOutlinedIcon sx={{ fontSize: 40, color: 'lightblue' }} />
-              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white', fontSize: { xs: 16, sm: 20, md: 24, lg: 24, xl: 24 } }}>Global Community</Typography>
-              <Typography variant="h7" color="initial" sx={{ color: 'white', fontSize: { xs: 12, sm: 14, md: 16, lg: 16, xl: 16 } }}>Connect with 50K+ writers worldwide</Typography>
-            </Box1>
-            <Box1 sx={{ height: { xs: '100px', sm: '180px', md: '180px', lg: '140px', xl: '140px' }, }}>
-              <ElectricBoltOutlinedIcon sx={{ fontSize: 40, color: 'lightgreen' }} />
-              <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white', fontSize: { xs: 16, sm: 20, md: 24, lg: 24, xl: 24 } }}>Instant Publishing</Typography>
-              <Typography variant="h7" color="initial" sx={{ color: 'white', fontSize: { xs: 12, sm: 14, md: 16, lg: 16, xl: 16 } }}>Share your stories with one click</Typography>
-            </Box1>
+        <motion.div initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 50, damping: 20 }} style={{ border: 'none', background: 'none' }}>
+          <Box>
+            <Typography variant="h3" color="initial" sx={{ fontWeight: 'bold', color: 'white', textAlign: 'center', pt: 4, fontSize: { xs: 24, sm: 36, md: 48, lg: 48, xl: 48 } }}>Welcome to BlogCraftier</Typography>
+            <Typography variant="body2" color="initial" sx={{ color: 'rgba(255, 255, 255, 0.9)', textAlign: 'center', mt: 2, fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}>Where stories come to life and creativity knows no bounds.</Typography>
           </Box>
-        </Box>
+        </motion.div>
+        {/* Features */}
+        <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 60, damping: 20 }} style={{ border: 'none', background: 'none'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', flexDirection: { xs: 'column', sm: 'row', md: 'row', lg: 'row', xl: 'row' }, alignItems: 'center', mt: 6 }}>
+              <Box1 sx={{ height: { xs: '150px', sm: '240px', md: '200px', lg: '200px', xl: '200px' }, }}>
+                <AutoAwesomeOutlinedIcon sx={{ fontSize: 40, color: 'yellow' }} />
+                <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white', fontSize: { xs: 16, sm: 20, md: 24, lg: 24, xl: 24 } }}>AI-Powered Writing</Typography>
+                <Typography variant="h7" color="initial" sx={{ color: 'white', fontSize: { xs: 12, sm: 14, md: 16, lg: 16, xl: 16 } }}>Get suggestions and enhance your content with AI</Typography>
+              </Box1>
+              <Box1 sx={{ height: { xs: '150px', sm: '240px', md: '200px', lg: '200px', xl: '200px' }, }}>
+                <GroupOutlinedIcon sx={{ fontSize: 40, color: 'lightblue' }} />
+                <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white', fontSize: { xs: 16, sm: 20, md: 24, lg: 24, xl: 24 } }}>Global Community</Typography>
+                <Typography variant="h7" color="initial" sx={{ color: 'white', fontSize: { xs: 12, sm: 14, md: 16, lg: 16, xl: 16 } }}>Connect with 50K+ writers worldwide</Typography>
+              </Box1>
+              <Box1 sx={{ height: { xs: '150px', sm: '240px', md: '200px', lg: '200px', xl: '200px' }, }}>
+                <ElectricBoltOutlinedIcon sx={{ fontSize: 40, color: 'lightgreen' }} />
+                <Typography variant="h6" color="initial" sx={{ fontWeight: 'bold', color: 'white', fontSize: { xs: 16, sm: 20, md: 24, lg: 24, xl: 24 } }}>Instant Publishing</Typography>
+                <Typography variant="h7" color="initial" sx={{ color: 'white', fontSize: { xs: 12, sm: 14, md: 16, lg: 16, xl: 16 } }}>Share your stories with one click</Typography>
+              </Box1>
+            </Box>
+          </Box>
+        </motion.div>
         {/* Buttons */}
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row', md: 'row', lg: 'row', xl: 'row' }, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-          <Button variant="contained" component={Link} to="/sgnp" sx={{ mt: 4, backgroundColor: '#ffffffff', color: 'black', '&:hover': { backgroundColor: '#cfcfcfff' }, p: 2, m: 2, borderRadius: 2, width: '270px' }}>Start Writing Today</Button>
-          <Button variant="outlined" component={Link} to="./lgscrn" sx={{ mt: 4, color: 'white', border: '1px solid white', '&:hover': { backgroundColor: '#bcbcbcff' }, p: 2, m: 2, borderRadius: 2, width: '270px', textAlign: 'center' }}>I Already have an account</Button>
-        </Box>
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 30, damping: 20 }} style={{ border: 'none', background: 'none' }}>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row', md: 'row', lg: 'row', xl: 'row' }, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+              <Button variant="contained" component={Link} to="/sgnp" sx={{ mt: 4, backgroundColor: '#ffffffff', color: 'black', '&:hover': { backgroundColor: '#cfcfcfff' }, p: 2, m: 2, borderRadius: 2, width: '270px' }}>Start Writing Today</Button>
+            </motion.button>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+              <Button variant="outlined" component={Link} to="./lgscrn" sx={{ mt: 4, color: 'white', border: '1px solid white', '&:hover': { backgroundColor: '#bcbcbcff' }, p: 2, m: 2, borderRadius: 2, width: '270px', textAlign: 'center' }}>I Already have an account</Button>
+            </motion.button>
+          </Box>
+        </motion.div>
         {/* Footer Text */}
-        <Box>
-          <Typography variant="body2" color="initial" sx={{ color: 'rgba(255, 255, 255, 0.5)', textAlign: 'center', mt: 9, fontSize: { xs: 10, sm: 12, md: 14, lg: 14, xl: 14 } }}>Trusted by creators from top publications worldwide</Typography>
-        </Box>
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 60, damping: 20 }} style={{ border: 'none', background: 'none' }}>
+          <Box>
+            <Typography variant="body2" color="initial" sx={{ color: 'rgba(255, 255, 255, 0.5)', textAlign: 'center', mt: 9, fontSize: { xs: 10, sm: 12, md: 14, lg: 14, xl: 14 } }}>Trusted by creators from top publications worldwide</Typography>
+          </Box>
+        </motion.div>
       </Box>
     </Box>
   );
