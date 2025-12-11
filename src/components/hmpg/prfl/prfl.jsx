@@ -177,7 +177,7 @@ function Prfl() {
                     <Navbar />
                     {/* Main Content Area */}
                     <Box sx={{ mt: 15, pb: 6, width: "100%", mx: "auto" }}>
-                        <Paper sx={{ display: "flex", borderRadius: 4, boxShadow: 3, width: "90%", mx: "auto", pt: 2, pb: 4 }}>
+                        <Paper sx={{ display: "flex", borderRadius: 4, boxShadow: 3, width: "90%", mx: "auto", pt: 2, pb: 4, backdropFilter: "blur(5px)" }}>
                             {/* Edit Profile Section */}
                             <Box sx={{ width: "100%", mt: 5, display: "flex", justifyContent: "center" }}>
                                 <Paper sx={{ width: { xs: "90%", sm: "50%", md: "50%", lg: "50%", xl: "50%" }, p: 1, borderRadius: 3, boxShadow: "none", background: "transparent" }}>
