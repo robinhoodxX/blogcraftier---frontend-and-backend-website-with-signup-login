@@ -92,7 +92,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router basename="/blogcraftier---frontend-and-backend-website-with-signup-login">
+      <Router>
         <Box id="bgAnimation"
           sx={{
             position: 'absolute',

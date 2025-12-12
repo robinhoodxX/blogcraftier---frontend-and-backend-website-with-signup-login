@@ -2,8 +2,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../../redux/themeSlice";
-// go UP 2 folders: comp → navbar → hmpg → redux
-
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
