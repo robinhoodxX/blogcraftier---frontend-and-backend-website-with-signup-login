@@ -48,11 +48,11 @@ function App() {
   // Particle Background Effect
 
   useEffect(() => {
-    // 1️⃣ Update body class for theme
+    // Update body class for theme
     document.body.classList.remove("light", "dark");
     document.body.classList.add(mode);
 
-    // 2️⃣ Update particle background
+    // Update particle background
     const container = document.getElementById("bgAnimation");
     if (!container) return;
 
