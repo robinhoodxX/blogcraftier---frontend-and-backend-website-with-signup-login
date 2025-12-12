@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/static/css/main.8e5b7066.css",
+    "main.js": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/static/js/main.6b2e294c.js",
+    "static/js/453.bbcdfc89.chunk.js": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/static/js/453.bbcdfc89.chunk.js",
+    "index.html": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/index.html",
+    "main.8e5b7066.css.map": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/static/css/main.8e5b7066.css.map",
+    "main.6b2e294c.js.map": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/static/js/main.6b2e294c.js.map",
+    "453.bbcdfc89.chunk.js.map": "/robinhoodxX/blogcraftier---frontend-and-backend-website-with-signup-login/static/js/453.bbcdfc89.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8e5b7066.css",
+    "static/js/main.6b2e294c.js"
+  ]
+}
