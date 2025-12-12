@@ -8,6 +8,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 
 
@@ -87,312 +88,318 @@ function SignupScreen() {
       }}
     >
       {/* Login Form */}
-      <Box
-        sx={{
-          display: "flex" ,
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          position: "relative",
-          overflow: "hidden",
-          zIndex: 1,
-        }}
+      <motion.div
+        initial={{ opacity: 0, y: -80 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: { xs: "80%", sm: "70%", md: "70%", lg: "70%", xl: "70%" },
-            maxWidth: 1000,
-            p: { xs: 2, sm: 5, md: 5, lg: 5, xl: 5 },
-            mx: "auto",
-            mt: 1,
-            borderRadius: 2,
-            bgcolor: "rgba(255, 255, 255, 0.1)", // like Paper
-            backdropFilter: "blur(8px)",
-            boxShadow: 3,     // mimic Paper's elevation
-            border: "1px solid rgba(255, 255, 255, 0.4)",
-            transition: "0.3s",
-            gap: 4,
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            position: "relative",
+            overflow: "hidden",
+            zIndex: 1,
           }}
         >
-          {/* Header Area */}
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <Typography
-              variant="h4"
-              align="center"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "rgba(255, 255, 255, 0.9)" }}
-            >
-              Create Account
-            </Typography>
-            <Typography
-              variant="body2"
-              align="center"
-              sx={{ color: "rgba(255, 255, 255, 0.7)" }}
-            >
-              Join our community of storytellers.
-            </Typography>
-          </Box>
-          {/* Main Content Area */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "space-around",
-              flexWrap: "wrap",
+              width: { xs: "80%", sm: "70%", md: "70%", lg: "70%", xl: "70%" },
+              maxWidth: 1000,
+              p: { xs: 2, sm: 5, md: 5, lg: 5, xl: 5 },
+              mx: "auto",
+              mt: 1,
+              borderRadius: 2,
+              bgcolor: "rgba(255, 255, 255, 0.1)", // like Paper
+              backdropFilter: "blur(8px)",
+              boxShadow: 3,     // mimic Paper's elevation
+              border: "1px solid rgba(255, 255, 255, 0.4)",
+              transition: "0.3s",
               gap: 4,
             }}
           >
-            {/* Signup Form */}
+            {/* Header Area */}
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: { xs: "80%", sm: "40%", md: "40%", lg: "40%", xl: "40%"},
+                width: "100%",
               }}
             >
-              {/* Full Name Input */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: 2,
-                  p: 1,
-                  mb: 2,
-                  bgcolor: "white",
-                  width: "100%",
-                }}
+              <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                sx={{ fontWeight: "bold", color: "rgba(255, 255, 255, 0.9)" }}
               >
-                <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
-                  name="fullName"
-                  placeholder="Full Name"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
-                />
-              </Box>
-              {/* Username Input */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: 2,
-                  p: 1,
-                  mb: 2,
-                  bgcolor: "white",
-                  width: "100%",
-                }}
-              >
-                <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
-                  name="username"
-                  placeholder="@Username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
-                />
-              </Box>
-              {/* Email Input */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: 2,
-                  p: 1,
-                  mb: 2,
-                  bgcolor: "white",
-                  width: "100%",
-                }}
-              >
-                <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
-                <InputBase
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
-                />
-              </Box>
-              {/* Password Input */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: 2,
-                  p: 1,
-                  mb: 2,
-                  bgcolor: "white",
-                  width: "100%",
-                }}
-              >
-                <HttpsIcon sx={{ color: "gray", mr: 1 }} />
-                <TextField
-                  name="password"
-                  type={showPassword ? "text" : "password"} // * ADDED
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  fullWidth
-                  variant="standard"
-                  sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
-                  InputProps={{
-                    disableUnderline: true,
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleToggleShowPassword} edge="end" size="small">
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Box>
-              {/* Confirm Password Input */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: 2,
-                  p: 1,
-                  mb: 2,
-                  bgcolor: "white",
-                  width: "100%",
-                }}
-              >
-                <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
-                <TextField // * ADDED
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
-                  type={showPassword ? "text" : "password"} // * ADDED
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  fullWidth
-                  variant="standard"
-                  InputProps={{
-                    disableUnderline: true,
-                    endAdornment: (
-                      <InputAdornment position="end">
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
-                />
-              </Box>
-              {error && (<Typography color="error" sx={{ mb: 2 }}>
-                {error}
+                Create Account
               </Typography>
-              )}
-              {/* Signup Button */}
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={handleSignup} 
-                disabled={loading}
-                sx={{ mt: 2, p: 1.5, fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 }, borderRadius: 2 }}
-              >
-                Signup
-              </Button>
-              {/* Forgot Password Link */}
-              <Box sx={{ mt: 2, textAlign: "center" }}>
-                <Typography
-                  variant="body2"
-                  align="center"
-                  sx={{ color: "rgba(216, 216, 216, 0.7)", mb: 2, fontSize: { xs: 11, sm: 14, md: 14, lg: 14, xl: 14 } }}
-                >
-                  {" "}
-                  Already have an account?{" "}
-                  <Link
-                    to="../lgscrn"
-                    style={{
-                      textDecoration: "none",
-                      color: "rgba(255, 255, 255, 0.7)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Log in
-                  </Link>
-                </Typography>
-              </Box>
-            </Box>
-            {/* Divider and Social Login */}
-            <Box sx={{ mb: 15, width: { xs: "60%", sm: "40%", md: "40%", lg: "40%", xl: "40%" }, p: { xs: 1, sm: 2, md: 2, lg: 2, xl: 2 } }}>
-              {/* Divider */}
               <Typography
                 variant="body2"
                 align="center"
-                sx={{ color: "rgba(216, 216, 216, 0.7)", mt: 2, mb: 1, fontSize: { xs: 11, sm: 14, md: 14, lg: 14, xl: 14 } }}
+                sx={{ color: "rgba(255, 255, 255, 0.7)" }}
               >
-                or continue with
+                Join our community of storytellers.
               </Typography>
-              {/* Social Login Buttons */}
+            </Box>
+            {/* Main Content Area */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                width: "100%",
+                justifyContent: "space-around",
+                flexWrap: "wrap",
+                gap: 4,
+              }}
+            >
+              {/* Signup Form */}
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  flex: 1,
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: { xs: "80%", sm: "40%", md: "40%", lg: "40%", xl: "40%" },
                 }}
               >
-                {/* Social Buttons */}
-                <Button
-                  variant="contained"
+                {/* Full Name Input */}
+                <Box
                   sx={{
-                    backgroundColor: "#ffffffff",
-                    color: "rgba(85, 85, 85, 1)",
-                    "&:hover": { backgroundColor: "#303030ff", color: "white" },
-                    p: 2,
-                    m: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
                     borderRadius: 2,
+                    p: 1,
+                    mb: 2,
+                    bgcolor: "white",
                     width: "100%",
-                    fontSize: { xs: 14, sm: 16, md: 16, lg: 16, xl: 16 }
                   }}
                 >
-                  <GoogleIcon sx={{ mr: 1, color: "rgba(68, 210, 151, 1)", fontSize: { xs: 17, sm: 16, md: 16, lg: 16, xl: 16 } }} />
-                  Google
-                </Button>
-                <Button
-                  variant="contained"
+                  <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
+                  <InputBase
+                    name="fullName"
+                    placeholder="Full Name"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
+                  />
+                </Box>
+                {/* Username Input */}
+                <Box
                   sx={{
-                    backgroundColor: "#ffffffff",
-                    color: "rgba(85, 85, 85, 1)",
-                    "&:hover": { backgroundColor: "#303030ff", color: "white" },
-                    p: 2,
-                    m: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
                     borderRadius: 2,
+                    p: 1,
+                    mb: 2,
+                    bgcolor: "white",
                     width: "100%",
-                    fontSize: { xs: 14, sm: 16, md: 16, lg: 16, xl: 16 }
                   }}
                 >
-                  <FacebookIcon sx={{ mr: 1, color: "rgba(86, 87, 174, 1)" }} />
-                  Facebook
+                  <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
+                  <InputBase
+                    name="username"
+                    placeholder="@Username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
+                  />
+                </Box>
+                {/* Email Input */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
+                    borderRadius: 2,
+                    p: 1,
+                    mb: 2,
+                    bgcolor: "white",
+                    width: "100%",
+                  }}
+                >
+                  <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
+                  <InputBase
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    fullWidth
+                    sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
+                  />
+                </Box>
+                {/* Password Input */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
+                    borderRadius: 2,
+                    p: 1,
+                    mb: 2,
+                    bgcolor: "white",
+                    width: "100%",
+                  }}
+                >
+                  <HttpsIcon sx={{ color: "gray", mr: 1 }} />
+                  <TextField
+                    name="password"
+                    type={showPassword ? "text" : "password"} // * ADDED
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="standard"
+                    sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleToggleShowPassword} edge="end" size="small">
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Box>
+                {/* Confirm Password Input */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
+                    borderRadius: 2,
+                    p: 1,
+                    mb: 2,
+                    bgcolor: "white",
+                    width: "100%",
+                  }}
+                >
+                  <MailOutlineOutlinedIcon sx={{ color: "gray", mr: 1 }} />
+                  <TextField // * ADDED
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    type={showPassword ? "text" : "password"} // * ADDED
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="standard"
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <InputAdornment position="end">
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{ fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 } }}
+                  />
+                </Box>
+                {error && (<Typography color="error" sx={{ mb: 2 }}>
+                  {error}
+                </Typography>
+                )}
+                {/* Signup Button */}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={handleSignup}
+                  disabled={loading}
+                  sx={{ mt: 2, p: 1.5, fontSize: { xs: 12, sm: 16, md: 16, lg: 16, xl: 16 }, borderRadius: 2 }}
+                >
+                  Signup
                 </Button>
+                {/* Forgot Password Link */}
+                <Box sx={{ mt: 2, textAlign: "center" }}>
+                  <Typography
+                    variant="body2"
+                    align="center"
+                    sx={{ color: "rgba(216, 216, 216, 0.7)", mb: 2, fontSize: { xs: 11, sm: 14, md: 14, lg: 14, xl: 14 } }}
+                  >
+                    {" "}
+                    Already have an account?{" "}
+                    <Link
+                      to="../lgscrn"
+                      style={{
+                        textDecoration: "none",
+                        color: "rgba(255, 255, 255, 0.7)",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Log in
+                    </Link>
+                  </Typography>
+                </Box>
+              </Box>
+              {/* Divider and Social Login */}
+              <Box sx={{ mb: 15, width: { xs: "60%", sm: "40%", md: "40%", lg: "40%", xl: "40%" }, p: { xs: 1, sm: 2, md: 2, lg: 2, xl: 2 } }}>
+                {/* Divider */}
+                <Typography
+                  variant="body2"
+                  align="center"
+                  sx={{ color: "rgba(216, 216, 216, 0.7)", mt: 2, mb: 1, fontSize: { xs: 11, sm: 14, md: 14, lg: 14, xl: 14 } }}
+                >
+                  or continue with
+                </Typography>
+                {/* Social Login Buttons */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexWrap: "wrap",
+                    flex: 1,
+                  }}
+                >
+                  {/* Social Buttons */}
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#ffffffff",
+                      color: "rgba(85, 85, 85, 1)",
+                      "&:hover": { backgroundColor: "#303030ff", color: "white" },
+                      p: 2,
+                      m: 1,
+                      borderRadius: 2,
+                      width: "100%",
+                      fontSize: { xs: 14, sm: 16, md: 16, lg: 16, xl: 16 }
+                    }}
+                  >
+                    <GoogleIcon sx={{ mr: 1, color: "rgba(68, 210, 151, 1)", fontSize: { xs: 17, sm: 16, md: 16, lg: 16, xl: 16 } }} />
+                    Google
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#ffffffff",
+                      color: "rgba(85, 85, 85, 1)",
+                      "&:hover": { backgroundColor: "#303030ff", color: "white" },
+                      p: 2,
+                      m: 1,
+                      borderRadius: 2,
+                      width: "100%",
+                      fontSize: { xs: 14, sm: 16, md: 16, lg: 16, xl: 16 }
+                    }}
+                  >
+                    <FacebookIcon sx={{ mr: 1, color: "rgba(86, 87, 174, 1)" }} />
+                    Facebook
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      </motion.div>
     </Box>
   );
 }

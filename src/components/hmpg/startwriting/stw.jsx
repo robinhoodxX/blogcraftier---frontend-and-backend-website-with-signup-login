@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { Box, Button, Typography, Paper, TextField, Alert } from "@mui/material";
+import { Box, Button, Typography, Paper, TextField, Alert, Slider } from "@mui/material";
 import axios from 'axios'; // Make sure axios is installed
 import Navbar from "../navbar/navbar.jsx";
+import { motion } from 'framer-motion';
 
 function Stw({ onStorySubmit }) {
   const [title, setTitle] = useState("");
@@ -55,95 +56,101 @@ function Stw({ onStorySubmit }) {
       <Navbar />
 
       {/* Main Content desktop screen */}
-      <Box sx={{ width: "100%", margin: "auto", mt: 12 }}>
-        <Paper sx={{ display: "flex", flexDirection: "column", width: "95%", margin: "auto", pt: 1, pb: 2, mb: 3, mt: 3, borderRadius: 5  }}>
-          <Typography variant="h5" align="center" sx={{ mt: 10, mb: 2 }}>
-            Start Writing Your Story
-          </Typography>
+      <Box sx={{ width: "100%", margin: "auto", mt: 15 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 90 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Paper sx={{ display: "flex", flexDirection: "column", width: "95%", margin: "auto", pt: 1, pb: 2, mb: 3, mt: 3, borderRadius: 5, backdropFilter: "blur(3px)" }}>
+            <Typography variant="h5" align="center" sx={{ mt: 10, mb: 2 }}>
+              Start Writing Your Story
+            </Typography>
 
-          {/* Error & Success Messages */}
-          {error && (
-            <Alert severity="error" sx={{ width: "90%", margin: "auto", mb: 2 }}>
-              {error}
-            </Alert>
-          )}
-          {success && (
-            <Alert severity="success" sx={{ width: "90%", margin: "auto", mb: 2 }}>
-              Story submitted successfully!
-            </Alert>
-          )}
+            {/* Error & Success Messages */}
+            {error && (
+              <Alert severity="error" sx={{ width: "90%", margin: "auto", mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+            {success && (
+              <Alert severity="success" sx={{ width: "90%", margin: "auto", mb: 2 }}>
+                Story submitted successfully!
+              </Alert>
+            )}
 
-          {/* Title Input */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <TextField
-              label="Title"
-              variant="outlined"
-              fullWidth
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              sx={{ mb: 2, width: '90%' }}
-            />
-          </Box>
+            {/* Title Input */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+              <TextField
+                label="Title"
+                variant="outlined"
+                fullWidth
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                sx={{ mb: 2, width: '90%' }}
+              />
+            </Box>
 
-          {/* Category Input */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <TextField
-              label="Category"
-              variant="outlined"
-              fullWidth
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              sx={{ mb: 2, width: '90%' }}
-            />
-          </Box>
+            {/* Category Input */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+              <TextField
+                label="Category"
+                variant="outlined"
+                fullWidth
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                sx={{ mb: 2, width: '90%' }}
+              />
+            </Box>
 
-          {/* Keywords Input */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <TextField
-              label="Keywords"
-              variant="outlined"
-              fullWidth
-              value={keywords}
-              onChange={(e) => setKeywords(e.target.value)}
-              sx={{ mb: 2, width: '90%' }}
-            />
-          </Box>
+            {/* Keywords Input */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+              <TextField
+                label="Keywords"
+                variant="outlined"
+                fullWidth
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+                sx={{ mb: 2, width: '90%' }}
+              />
+            </Box>
 
-          {/* Text Area */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 5 }}>
-            <TextField
-              label="Write your story here..."
-              variant="outlined"
-              fullWidth
-              multiline
-              minRows={10}
-              value={story}
-              onChange={(e) => setStory(e.target.value)}
-              sx={{
-                mb: 2,
-                width: '90%',
-                '& .MuiInputBase-root': {
-                  minHeight: '300px',
-                  alignItems: 'flex-start',
-                  whiteSpace: 'pre-wrap',
-                  wordBreak: 'break-word',
-                }
-              }}
-            />
-          </Box>
+            {/* Text Area */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 5 }}>
+              <TextField
+                label="Write your story here..."
+                variant="outlined"
+                fullWidth
+                multiline
+                minRows={10}
+                value={story}
+                onChange={(e) => setStory(e.target.value)}
+                sx={{
+                  mb: 2,
+                  width: '90%',
+                  '& .MuiInputBase-root': {
+                    minHeight: '300px',
+                    alignItems: 'flex-start',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word',
+                  }
+                }}
+              />
+            </Box>
 
-          {/* Submit Button */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 5 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              {isLoading ? "Submitting..." : "Submit"}
-            </Button>
-          </Box>
-        </Paper>
+            {/* Submit Button */}
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 5 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+                disabled={isLoading}
+              >
+                {isLoading ? "Submitting..." : "Submit"}
+              </Button>
+            </Box>
+          </Paper>
+        </motion.div>
       </Box>
     </Box>
   );
