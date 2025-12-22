@@ -23,6 +23,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EmailIcon from "@mui/icons-material/Email";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import PolicyIcon from "@mui/icons-material/Policy";
+import { motion } from 'framer-motion';
 
 // Single-file Help Center component for Blogcraftier using Material UI
 // Default export is the component so it can be imported and used directly.
@@ -129,171 +130,177 @@ export default function Hc() {
   return (
     <Box sx={{ minHeight: "100vh"}}>
 
-      <Container sx={{ py: 6 }} maxWidth="lg">
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={8}>
-            <Paper sx={{ p: 3 }} elevation={3}>
-              <Typography variant="h4" gutterBottom>
-                Need help? We’re here for you.
-              </Typography>
-              <Typography variant="body1" color="text.secondary" paragraph>
-                Search articles, browse FAQs, or contact support if you can’t find
-                an answer.
-              </Typography>
-
-              <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
-                <TextField
-                  fullWidth
-                  value={query}
-                  onChange={handleSearchChange}
-                  placeholder="Search help articles, e.g. 'schedule post' or 'custom domain'"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  sx={{ px: 3 }}
-                  onClick={() => setQuery("")}
-                >
-                  Clear
-                </Button>
-              </Box>
-
-              <Divider sx={{ my: 2 }} />
-
-              {matchingSections.map((section, i) => (
-                <Box key={section.title} sx={{ mb: 2 }}>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                    {section.title}
-                  </Typography>
-
-                  {section.faqs.length === 0 ? (
-                    <Typography variant="body2" color="text.secondary">
-                      No results in this section.
-                    </Typography>
-                  ) : (
-                    section.faqs.map((f, idx) => (
-                      <Accordion
-                        key={f.q}
-                        expanded={expanded === `${i}-${idx}`}
-                        onChange={handleAccordion(`${i}-${idx}`)}
-                      >
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls={`panel-${i}-${idx}-content`}
-                          id={`panel-${i}-${idx}-header`}
-                        >
-                          <Typography sx={{ fontWeight: 600 }}>{f.q}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <Typography>{f.a}</Typography>
-                        </AccordionDetails>
-                      </Accordion>
-                    ))
-                  )}
-                </Box>
-              ))}
-
-              <Box sx={{ mt: 4 }}>
-                <Typography variant="subtitle1" gutterBottom>
-                  Still need help?
+      <motion.div
+        initial={{ opacity: 0, y: -80 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Container sx={{ py: 6 }} maxWidth="lg">
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={8}>
+              <Paper sx={{ p: 3 }} elevation={3}>
+                <Typography variant="h4" gutterBottom>
+                  Need help? We’re here for you.
                 </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  If the guides above don’t solve your problem, contact our support
-                  team and we’ll get back to you within 1–2 business days.
+                <Typography variant="body1" color="text.secondary" paragraph>
+                  Search articles, browse FAQs, or contact support if you can’t find
+                  an answer.
                 </Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<EmailIcon />}
-                  href="mailto:support@blogcraftier.com"
-                >
-                  Email Support
-                </Button>
-              </Box>
-            </Paper>
-          </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, gap: 2 }}>
-              <Paper sx={{ p: 2, pr: {xs: 2, md: 45}, mb: 2 }} elevation={2}>
-                <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, alignItems: "center", gap: 2 }}>
-                  <Avatar sx={{ width: 56, height: 56 }}>BC</Avatar>
-                  <Box>
-                    <Typography variant="subtitle1">Blogcraftier Team</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Support available Mon–Fri, 9:00–18:00 (GMT+5)
-                    </Typography>
-                  </Box>
+                <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+                  <TextField
+                    fullWidth
+                    value={query}
+                    onChange={handleSearchChange}
+                    placeholder="Search help articles, e.g. 'schedule post' or 'custom domain'"
+                    variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    sx={{ px: 3 }}
+                    onClick={() => setQuery("")}
+                  >
+                    Clear
+                  </Button>
                 </Box>
 
                 <Divider sx={{ my: 2 }} />
 
-                <List dense>
-                  <ListItem>
-                    <ListItemText
-                      primary="Email"
-                      secondary={<a href="mailto:support@blogcraftier.com">support@blogcraftier.com</a>}
-                    />
-                  </ListItem>
+                {matchingSections.map((section, i) => (
+                  <Box key={section.title} sx={{ mb: 2 }}>
+                    <Typography variant="h6" sx={{ mb: 1 }}>
+                      {section.title}
+                    </Typography>
 
-                  <ListItem>
-                    <ListItemText primary="Live Chat" secondary="Available on the website" />
-                  </ListItem>
+                    {section.faqs.length === 0 ? (
+                      <Typography variant="body2" color="text.secondary">
+                        No results in this section.
+                      </Typography>
+                    ) : (
+                      section.faqs.map((f, idx) => (
+                        <Accordion
+                          key={f.q}
+                          expanded={expanded === `${i}-${idx}`}
+                          onChange={handleAccordion(`${i}-${idx}`)}
+                        >
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls={`panel-${i}-${idx}-content`}
+                            id={`panel-${i}-${idx}-header`}
+                          >
+                            <Typography sx={{ fontWeight: 600 }}>{f.q}</Typography>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <Typography>{f.a}</Typography>
+                          </AccordionDetails>
+                        </Accordion>
+                      ))
+                    )}
+                  </Box>
+                ))}
 
-                  <ListItem>
-                    <ListItemText primary="Community" secondary="Join our forum for tips & peers" />
-                  </ListItem>
-                </List>
-
-                <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, gap: 1, mt: 1 }}>
-                  <Chip icon={<LiveHelpIcon />} label="Help Articles" clickable />
-                  <Chip icon={<PolicyIcon />} label="Privacy & Security" clickable />
+                <Box sx={{ mt: 4 }}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Still need help?
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    If the guides above don’t solve your problem, contact our support
+                    team and we’ll get back to you within 1–2 business days.
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    startIcon={<EmailIcon />}
+                    href="mailto:support@blogcraftier.com"
+                  >
+                    Email Support
+                  </Button>
                 </Box>
               </Paper>
-
-              <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
-                <Typography variant="subtitle1" gutterBottom>
-                  Quick links
-                </Typography>
-                <Button fullWidth variant="text" sx={{ justifyContent: "flex-start" }}>
-                  Dashboard
-                </Button>
-                <Button fullWidth variant="text" sx={{ justifyContent: "flex-start" }}>
-                  Create Post
-                </Button>
-                <Button fullWidth variant="text" sx={{ justifyContent: "flex-start" }}>
-                  Monetization
-                </Button>
-              </Paper>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Box sx={{ mt: 6, mb: 4 }}>
-          <Paper sx={{ p: 3 }} elevation={1}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} md={8}>
-                <Typography variant="h6">Contact & Legal</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Email: support@blogcraftier.com • Terms & Conditions • Privacy Policy
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={4} sx={{ textAlign: { xs: "left", md: "right" } }}>
-                <Button variant="outlined" sx={{ mr: 1 }}>
-                  Privacy Policy
-                </Button>
-                <Button variant="outlined">Terms</Button>
-              </Grid>
             </Grid>
-          </Paper>
-        </Box>
-      </Container>
+
+            <Grid item xs={12} md={4}>
+              <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 2 }}>
+                <Paper sx={{ p: 2, pr: { xs: 2, md: 45 }, mb: 2 }} elevation={2}>
+                  <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: "center", gap: 2 }}>
+                    <Avatar sx={{ width: 56, height: 56 }}>BC</Avatar>
+                    <Box>
+                      <Typography variant="subtitle1">Blogcraftier Team</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Support available Mon–Fri, 9:00–18:00 (GMT+5)
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Divider sx={{ my: 2 }} />
+
+                  <List dense>
+                    <ListItem>
+                      <ListItemText
+                        primary="Email"
+                        secondary={<a href="mailto:support@blogcraftier.com">support@blogcraftier.com</a>}
+                      />
+                    </ListItem>
+
+                    <ListItem>
+                      <ListItemText primary="Live Chat" secondary="Available on the website" />
+                    </ListItem>
+
+                    <ListItem>
+                      <ListItemText primary="Community" secondary="Join our forum for tips & peers" />
+                    </ListItem>
+                  </List>
+
+                  <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 1, mt: 1 }}>
+                    <Chip icon={<LiveHelpIcon />} label="Help Articles" clickable />
+                    <Chip icon={<PolicyIcon />} label="Privacy & Security" clickable />
+                  </Box>
+                </Paper>
+
+                <Paper sx={{ p: 2, mb: 2 }} elevation={2}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Quick links
+                  </Typography>
+                  <Button fullWidth variant="text" sx={{ justifyContent: "flex-start" }}>
+                    Dashboard
+                  </Button>
+                  <Button fullWidth variant="text" sx={{ justifyContent: "flex-start" }}>
+                    Create Post
+                  </Button>
+                  <Button fullWidth variant="text" sx={{ justifyContent: "flex-start" }}>
+                    Monetization
+                  </Button>
+                </Paper>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Box sx={{ mt: 6, mb: 4 }}>
+            <Paper sx={{ p: 3 }} elevation={1}>
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={12} md={8}>
+                  <Typography variant="h6">Contact & Legal</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Email: support@blogcraftier.com • Terms & Conditions • Privacy Policy
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={4} sx={{ textAlign: { xs: "left", md: "right" } }}>
+                  <Button variant="outlined" sx={{ mr: 1 }}>
+                    Privacy Policy
+                  </Button>
+                  <Button variant="outlined">Terms</Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Box>
+        </Container>
+      </motion.div>
     </Box>
   );
 }
